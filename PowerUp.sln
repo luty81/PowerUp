@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp", "PowerUp\PowerUp.csproj", "{66022726-B02C-4673-90AE-6C68FA6C33BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.EF6", "PowerUp.EF6\PowerUp.EF6.csproj", "{839BA677-173D-4447-967B-8DDE61C81090}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Tests", "PowerUp.Tests\PowerUp.Tests.csproj", "{71CC7028-90EF-4F70-BFBA-746D36BD9413}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66022726-B02C-4673-90AE-6C68FA6C33BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66022726-B02C-4673-90AE-6C68FA6C33BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66022726-B02C-4673-90AE-6C68FA6C33BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66022726-B02C-4673-90AE-6C68FA6C33BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{839BA677-173D-4447-967B-8DDE61C81090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{839BA677-173D-4447-967B-8DDE61C81090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{839BA677-173D-4447-967B-8DDE61C81090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{839BA677-173D-4447-967B-8DDE61C81090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71CC7028-90EF-4F70-BFBA-746D36BD9413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71CC7028-90EF-4F70-BFBA-746D36BD9413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71CC7028-90EF-4F70-BFBA-746D36BD9413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71CC7028-90EF-4F70-BFBA-746D36BD9413}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
