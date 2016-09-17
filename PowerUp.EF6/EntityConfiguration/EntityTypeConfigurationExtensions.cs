@@ -5,17 +5,13 @@ using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
-using PowerUp;
-using System.Data.Entity.ModelConfiguration.Configuration;
 
 namespace PowerUp.EF6
 {
     public static class EntityTypeConfigurationExtensions
     {
-        public static EntityTypeConfiguration<T> ConfigurePkFor<T, TKey>(this EntityTypeConfiguration<T> self, Expression<Func<T, TKey>> keyFieldSelector) 
+        public static EntityTypeConfiguration<T> ConfigurePkFor<T, TKey>(this EntityTypeConfiguration<T> self, Expression<Func<T, TKey>> keyFieldSelector)
             where T : class where TKey : struct
         {
             self.HasKey(keyFieldSelector)
@@ -26,11 +22,11 @@ namespace PowerUp.EF6
         }
 
         public static EntityTypeConfiguration<TEntity> ConfigureFkRequiredFor<TEntity, TForeignEntity, TKey>(this EntityTypeConfiguration<TEntity> self,
-            Expression<Func<TEntity, TForeignEntity>> field, 
-            Expression<Func<TForeignEntity, TKey>> keySelector, 
+            Expression<Func<TEntity, TForeignEntity>> field,
+            Expression<Func<TForeignEntity, TKey>> keySelector,
             bool cascadeOnDelete = false)
-            where TEntity : class 
-            where TForeignEntity : class 
+            where TEntity : class
+            where TForeignEntity : class
             where TKey : struct
         {
             self.HasRequired(field)
@@ -41,11 +37,11 @@ namespace PowerUp.EF6
             return self;
         }
 
-        public static EntityTypeConfiguration<TEntity> ConfigureFkRequiredFor<TEntity, TForeignEntity>(this EntityTypeConfiguration<TEntity> self, 
-            Expression<Func<TEntity, TForeignEntity>> field, 
-            string mapKeyName, 
+        public static EntityTypeConfiguration<TEntity> ConfigureFkRequiredFor<TEntity, TForeignEntity>(this EntityTypeConfiguration<TEntity> self,
+            Expression<Func<TEntity, TForeignEntity>> field,
+            string mapKeyName,
             bool cascadeOnDelete = false)
-            where TEntity : class 
+            where TEntity : class
             where TForeignEntity : class
         {
             self.HasRequired(field)
@@ -57,11 +53,11 @@ namespace PowerUp.EF6
         }
 
         public static EntityTypeConfiguration<TEntity> ConfigureFkRequiredWithNavigationFor<TEntity, TForeignEntity, TKey>(this EntityTypeConfiguration<TEntity> self,
-            Expression<Func<TEntity, TForeignEntity>> field, 
-            Expression<Func<TForeignEntity, ICollection<TEntity>>> dependencyNavigation, 
-            Expression<Func<TForeignEntity, TKey>> keySelector, 
+            Expression<Func<TEntity, TForeignEntity>> field,
+            Expression<Func<TForeignEntity, ICollection<TEntity>>> dependencyNavigation,
+            Expression<Func<TForeignEntity, TKey>> keySelector,
             bool cascadeOnDelete = false)
-            where TEntity : class 
+            where TEntity : class
             where TForeignEntity : class
         {
             self.HasRequired(field)
@@ -89,14 +85,14 @@ namespace PowerUp.EF6
         }
 
         public static EntityTypeConfiguration<TEntity> ConfigureFkOptionalFor<TEntity, TForeignEntity, TKey>(this EntityTypeConfiguration<TEntity> self,
-            Expression<Func<TEntity, TForeignEntity>> field, 
-            Expression<Func<TForeignEntity, TKey>> keySelector, 
+            Expression<Func<TEntity, TForeignEntity>> field,
+            Expression<Func<TForeignEntity, TKey>> keySelector,
             bool cascadeOnDelete = false)
-            where TEntity : class 
+            where TEntity : class
             where TForeignEntity : class
-            where TKey: struct
+            where TKey : struct
         {
-            
+
             self.HasOptional(field)
                 .WithMany()
                 .Map(fkConfig => fkConfig.MapKey(keySelector.GetExpressionTargetMemberName()))
@@ -105,9 +101,9 @@ namespace PowerUp.EF6
             return self;
         }
 
-        public static EntityTypeConfiguration<TEntity> ConfigureFkOptionalFor<TEntity, TForeignEntity>(this EntityTypeConfiguration<TEntity> self, 
-            Expression<Func<TEntity, TForeignEntity>> field, 
-            string mapKeyName, 
+        public static EntityTypeConfiguration<TEntity> ConfigureFkOptionalFor<TEntity, TForeignEntity>(this EntityTypeConfiguration<TEntity> self,
+            Expression<Func<TEntity, TForeignEntity>> field,
+            string mapKeyName,
             bool cascadeOnDelete = false)
             where TEntity : class
             where TForeignEntity : class
@@ -125,8 +121,8 @@ namespace PowerUp.EF6
             Expression<Func<TForeignEntity, ICollection<TEntity>>> dependencyNavigation,
             Expression<Func<TForeignEntity, TKey>> keySelector,
             bool cascadeOnDelete = false)
-            where TEntity : class 
-            where TForeignEntity : class 
+            where TEntity : class
+            where TForeignEntity : class
             where TKey : struct
         {
             self.HasOptional(foreignPropertySelector)
@@ -136,8 +132,8 @@ namespace PowerUp.EF6
             return self;
         }
 
-        public static EntityTypeConfiguration<TEntity> CreateUniqueIndexFor<TEntity>(this EntityTypeConfiguration<TEntity> self, 
-            Expression<Func<TEntity, string>> field, 
+        public static EntityTypeConfiguration<TEntity> CreateUniqueIndexFor<TEntity>(this EntityTypeConfiguration<TEntity> self,
+            Expression<Func<TEntity, string>> field,
             int maxLength = 100)
             where TEntity : class
         {
@@ -149,17 +145,17 @@ namespace PowerUp.EF6
         }
 
         public static EntityTypeConfiguration<TEntity> CreateCompositeUniqueIndex<TEntity, TColumn1, TColumn2>(this EntityTypeConfiguration<TEntity> self,
-            Expression<Func<TEntity, TColumn1>> column1Selector, 
+            Expression<Func<TEntity, TColumn1>> column1Selector,
             Expression<Func<TEntity, TColumn2>> column2Selector)
             where TEntity : class
-            where TColumn1: struct
-            where TColumn2: struct
+            where TColumn1 : struct
+            where TColumn2 : struct
         {
             Func<Expression, string> nameFrom = c => ((MemberExpression)((LambdaExpression)c).Body).Member.Name;
             var indexName = String.Format("IX_Unique_{0}_{1}_{2}", typeof(TEntity).Name, nameFrom(column1Selector), nameFrom(column2Selector));
 
-            
-            Func<int, IndexAnnotation> indexAnnotation = 
+
+            Func<int, IndexAnnotation> indexAnnotation =
                 order => new IndexAnnotation(new IndexAttribute(indexName) { IsUnique = true, Order = order });
 
             self.Property(column1Selector).IsRequired().HasColumnAnnotation(IndexAnnotation.AnnotationName, indexAnnotation(1));
@@ -169,15 +165,14 @@ namespace PowerUp.EF6
         }
 
         public static EntityTypeConfiguration<TEntity> ConfigureOneToOneRelationship<TEntity, TForeignEntity>(this EntityTypeConfiguration<TEntity> self,
-            Expression<Func<TEntity, TForeignEntity>> foreignEntitySelector, 
+            Expression<Func<TEntity, TForeignEntity>> foreignEntitySelector,
             Expression<Func<TForeignEntity, TEntity>> entityPropertySelector)
-            where TEntity : class 
+            where TEntity : class
             where TForeignEntity : class
         {
             self.HasOptional(foreignEntitySelector).WithRequired(entityPropertySelector);
             return self;
         }
-
 
         public static EntityTypeConfiguration<TLeftEntity> ConfigureManyToManyRelationship<TLeftEntity, TRightEntity, TLeftEntityKey, TRightEntityKey>(this EntityTypeConfiguration<TLeftEntity> self,
             Expression<Func<TLeftEntity, ICollection<TRightEntity>>> rightCollectionSelector,
@@ -201,59 +196,15 @@ namespace PowerUp.EF6
 
             return self;
         }
-    }
-}
 
-namespace Dfb.BusaoLegal.Domain
-{
-    using System.Data.Entity.ModelConfiguration.Configuration;
-
-
-    public class UniqueIndexBuilder<TEntity> 
-        where TEntity: class 
-    {
-        private readonly EntityTypeConfiguration<TEntity> _entityMapper;
-        private readonly List<Expression> _indexProperties;
-        private readonly string _uniqueIndexName;
-
-        public UniqueIndexBuilder(EntityTypeConfiguration<TEntity> entityMapper, string uniqueIndexName)
+        public static void AreRequired<TEntity, TProperty>(this EntityTypeConfiguration<TEntity> self,
+            params Expression<Func<TEntity, TProperty>>[] properties)
+            where TEntity : class
+            where TProperty : struct
         {
-            _entityMapper = entityMapper;
-            _uniqueIndexName = uniqueIndexName;
-            _indexProperties = new List<Expression>();
-        }
-
-        public UniqueIndexBuilder<TEntity> AddPropertyToIndex<TIndexProperty>(Expression<Func<TEntity, TIndexProperty>> property)
-            where TIndexProperty : struct
-        {
-            _indexProperties.Add(property);
-            return this;
-        }
-
-        public void Done()
-        {
-            
-
-            Func<int, IndexAnnotation> newIndexAnnotation =
-                order =>
-                    new IndexAnnotation(new IndexAttribute(_uniqueIndexName)
-                    {
-                        IsUnique = true,
-                        Order = order
-                    });
-
-            System.Diagnostics.Debugger.Launch();
-            foreach(var indexColumn in _indexProperties)
+            foreach(var property in properties)
             {
-
-                var body = Expression.Lambda(indexColumn).Body;
-                    
-
-
-                //_entityMapper
-                //    .Property((Expression<Func<TEntity,struct>>)indexColumn)
-                //    .IsRequired()
-                //    .HasColumnAnnotation(IndexAnnotation.AnnotationName, newIndexAnnotation(i++));
+                self.Property(property).IsRequired();
             }
         }
     }
