@@ -99,6 +99,12 @@ namespace PowerUp.EF6
             return this;
         }
 
+        public PowerUpEntityConfiguration<T> WithRequiredStrings<TProperty>(params Expression<Func<T, String>>[] properties)
+        {
+            _sourceConfiguration.AreRequiredString(properties);
+            return this;
+        }
+
         public PowerUpEntityConfiguration(EntityTypeConfiguration<T> sourceConfiguration)
         {
             _sourceConfiguration = sourceConfiguration;

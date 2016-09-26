@@ -1,0 +1,31 @@
+﻿<table class='table table-bordered'>
+    <thead class='bg-grey'>
+        <tr>
+            <th colspan='2'>
+                @Model.Title
+                <span class='pull-right'>
+                    <i id='icoLoading' class='fa fa-spin fa-refresh hidden'></i>
+                </span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style='border-left-width:0px'>
+                <form action='@Model.Action' method='post' enctype='multipart/form-data'>
+                    <div class='row'>
+                        <div class='col-md-9'>
+                            <input class='form-control' type='file' name='file' />
+                        </div>
+                        <div class='col-md-3'>
+                            <button class='btn btn-success' type='submit' name='Submit' id='Submit'>
+                                <i class='fa fa-arrow-circle-down'></i>
+                                @Model.Title
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

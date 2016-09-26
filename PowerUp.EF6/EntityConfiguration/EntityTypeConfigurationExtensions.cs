@@ -207,5 +207,17 @@ namespace PowerUp.EF6
                 self.Property(property).IsRequired();
             }
         }
+
+        public static void AreRequiredString<TEntity>(this EntityTypeConfiguration<TEntity> self, 
+            params Expression<Func<TEntity, string>>[] properties)
+            where TEntity : class
+        {
+
+            
+            foreach(var property in properties)
+            {
+                self.Property(property).IsRequired();
+            }
+        }
     }
 }

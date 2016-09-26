@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc": "1.0.1",
+    "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
+    "RazorEngine": "4.4.0-rc1"
+
+  },
+
+  "buildOptions": {
+    "copyToOutput": {
+      "include": "Templates/UploadControl.cshtml"
+    }
+  },
+
+  "frameworks": {
+    "net461": {
+      "dependencies": {
+
+      }
+
+    }
+  }
+}

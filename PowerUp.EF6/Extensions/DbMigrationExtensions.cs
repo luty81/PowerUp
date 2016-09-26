@@ -22,7 +22,9 @@ namespace PowerUp.EF6
 
             var sqlInsert = sqlInsertBuilder.ToString();
             var sqlParameters = columns.Select(c => new SqlParameter("@" + c.Name, entity.GetPropertyValue(c.Name)));
-            context.Database.ExecuteSqlCommand(sqlInsert, sqlParameters.ToArray());
+            
+
+            //context.Database.ExecuteSqlCommand(sqlInsert, sqlParameters.ToArray());
         }
     }
 }
