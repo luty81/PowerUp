@@ -14,6 +14,15 @@
     }
   },
 
+  "packOptions": {
+    "summary": "Web components based on AspNet Core Tag Helper.",
+    "owners": [ "Luciano Fernandes" ],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/luty81/PowerUp"
+    }
+  },
+
   "frameworks": {
     "net461": {
       "dependencies": {
@@ -21,5 +30,11 @@
       }
 
     }
+  },
+
+  "scripts": {
+    "postcompile": [
+      "dotnet pack --no-build --configuration %compile:Configuration%"
+    ]
   }
 }

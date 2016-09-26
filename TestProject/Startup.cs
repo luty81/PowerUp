@@ -29,6 +29,7 @@ namespace TestProject
         {
             // Add framework services.
             services.AddMvc();
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,11 +42,15 @@ namespace TestProject
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+                loggerFactory.AddDebug(LogLevel.Information);
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+                loggerFactory.AddDebug(LogLevel.Error);
             }
+
+            loggerFactory.AddConsole(LogLevel.Debug);
 
             app.UseStaticFiles();
 
