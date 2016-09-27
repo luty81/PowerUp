@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.EF6", "PowerUp.EF6\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Tests", "PowerUp.Tests\PowerUp.Tests.csproj", "{71CC7028-90EF-4F70-BFBA-746D36BD9413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Mvc", "PowerUp.Mvc\PowerUp.Mvc.csproj", "{2BECFBEF-6718-4B8B-9227-EF0C238C091B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Mvc.Security", "PowerUp.Mvc.Security\PowerUp.Mvc.Security.csproj", "{2BECFBEF-6718-4B8B-9227-EF0C238C091B}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PowerUp.Mvc.WebComponents", "PowerUp.Mvc.WebComponents\PowerUp.Mvc.WebComponents.xproj", "{066E64DE-D4B7-4283-A43C-CE8EC07E1866}"
 EndProject
