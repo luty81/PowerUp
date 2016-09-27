@@ -8,3 +8,5 @@
 *.exe
 *.nupkg
 *.nuspec
+/build/Packages/temp/PowerUpMvc/lib/NET35
+*.user

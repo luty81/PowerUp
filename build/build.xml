@@ -1,0 +1,42 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0" DefaultTargets="default">
+	<PropertyGroup>
+		<Configuration Condition="'$(Configuration)'==''" >Release</Configuration>
+		<BaseDir>$(MSBuildProjectDirectory)\..</BaseDir>
+		<PackageDir>$(BaseDir)\build\Packages</PackageDir>
+		<MSBuildExtensions>$(BaseDir)\build\MSBuild\MSBuild.community.tasks.dll</MSBuildExtensions>
+		<PowerUpMvcProjectDir>$(BaseDir)\PowerUp.Mvc</PowerUpMvcProjectDir>
+		<OutputDir>$(PowerUpMvcProjectDir)\bin\$(Configuration)</OutputDir>
+		<TempDir>$(PackageDir)\temp\PowerUpMvc</TempDir>
+	</PropertyGroup>
+
+	<UsingTask AssemblyFile="$(MSBuildExtensions)" TaskName="MSBuild.Community.Tasks.XmlUpdate" />
+
+	<Target Name="default" DependsOnTargets="Compile; Package" />
+
+	<Target Name="Compile">
+		<MSBuild Projects="$(PowerUpMvcProjectDir)\PowerUp.Mvc.csproj" Properties="Configuration=$(Configuration)" />
+	</Target>
+
+	<Target Name="Package">
+		<ItemGroup>
+			<MainBinaries Include="$(OutputDir)\PowerUp.Mvc.dll" />
+		</ItemGroup>
+
+		<Copy SourceFiles="$(PowerUpMvcProjectDir)\PowerUp.Mvc.nuspec" DestinationFolder="$(TempDir)\" />
+		<Copy SourceFiles="@(MainBinaries)" DestinationFolder="$(TempDir)\lib\NET35%(RecursiveDir)" />
+
+		<GetAssemblyIdentity AssemblyFiles="$(OutputDir)\PowerUp.Mvc.dll">
+			<Output TaskParameter="Assemblies" ItemName="AsmInfo" />
+		</GetAssemblyIdentity>
+
+		<Message Text="%(AsmInfo.Version)" Importance="high"></Message>
+		
+		<XmlUpdate
+			Namespace="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+			XmlFileName="$(TempDir)\PowerUp.Mvc.nuspec"
+			XPath="/package/metadata/version"
+			Value="%(AsmInfo.Version)" />
+
+		<Exec WorkingDirectory="$(PackageDir)" Command="$(BaseDir)\nuget.exe pack $(TempDir)\PowerUp.Mvc.nuspec" />
+	</Target>
+</Project>

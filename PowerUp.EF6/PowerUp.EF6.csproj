@@ -33,6 +33,10 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="PowerUp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PowerUp.Core.1.0.1\lib\net461\PowerUp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -55,12 +59,8 @@
     <Compile Include="RepositoryFor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PowerUp\PowerUp.csproj">
-      <Project>{66022726-b02c-4673-90ae-6c68fa6c33ba}</Project>
-      <Name>PowerUp</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
