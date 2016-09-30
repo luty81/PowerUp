@@ -2,7 +2,7 @@ version: 1.0.{build}
 configuration: Release
 
 before_build:
-- cmd: nuget restore PowerUp.EF6\PowerUp.EF6.csproj -PackagesDirectory ..\packages
+- cmd: nuget restore PowerUp.EF6\PowerUp.EF6.csproj -PackagesDirectory ..\PowerUp\packages
 
 build:
   project: PowerUp.EF6\PowerUp.EF6.csproj
