@@ -9,7 +9,7 @@ build:
   verbosity: minimal
 
 before_package:
-- cmd: nuget pack -Version "$(appveyor_build_version)" PowerUp.EF6\PowerUp.EF.nuspec
+- cmd: nuget pack -Version APPVEYOR_BUILD_VERSION PowerUp.EF6\PowerUp.EF.nuspec
 
 artifacts:
 - path: '**\PowerUp.EF*.nupkg'
