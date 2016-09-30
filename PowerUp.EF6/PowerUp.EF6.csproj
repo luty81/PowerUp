@@ -48,12 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityConfiguration\BaseEntityConfiguration.cs" />
+    <Compile Include="EntityConfiguration\EntityRelationship.cs" />
+    <Compile Include="EntityConfiguration\EntityRelationshipManyToMany.cs" />
+    <Compile Include="EntityConfiguration\EntityRelationshipOneToOne.cs" />
+    <Compile Include="EntityConfiguration\EntityRelationshipOptional.cs" />
+    <Compile Include="EntityConfiguration\IEntityRelationship.cs" />
     <Compile Include="Extensions\DbContextExtensions.cs" />
     <Compile Include="Extensions\DbMigrationExtensions.cs" />
     <Compile Include="Annotations\DbViewAttribute.cs" />
-    <Compile Include="EntityConfiguration\PowerUpEntityConfiguration.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
-    <Compile Include="EntityConfiguration\EntityTypeConfigurationExtensions.cs" />
+    <Compile Include="Extensions\EntityTypeConfigurationExtensions.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryFor.cs" />
