@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
-    <metadata>
-        <id>PowerUp.EF</id>
-        <version></version>
-        <title>PowerUp.EF</title>
-        <authors>Luciano Fernandes</authors>
-        <owners>Luciano Fernandes</owners>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>PowerUp Core and extensions for Entity Framework 6</description>
-        <copyright>Copyright ©  2016</copyright>
-        <dependencies>
-            <dependency id="EntityFramework" version="6.1.3" />
-            <dependency id="PowerUp.Core" version="1.0.0" />
-        </dependencies>
-    </metadata>
-    <files>
-        <file src="bin\Release\PowerUp.EF6.dll" target="lib\net461\PowerUp.EF6.dll" />
-		<file src="bin\Release\PowerUp.EF6.pdb" target="lib\net461\PowerUp.EF6.pdb" />
-    </files>
+		<metadata>
+				<id>PowerUp.EF</id>
+				<version></version>
+				<title>PowerUp.EF</title>
+				<authors>Luciano Fernandes</authors>
+				<owners>Luciano Fernandes</owners>
+				<requireLicenseAcceptance>false</requireLicenseAcceptance>
+				<description>PowerUp Core and extensions for Entity Framework 6</description>
+				<copyright>Copyright ©  2016</copyright>
+				<dependencies>
+						<dependency id="EntityFramework" version="6.1.3" />
+						<dependency id="PowerUp.Core" version="1.0.0" />
+				</dependencies>
+		</metadata>
+		<files>
+				<file src="bin\Release\PowerUp.EF6.dll" target="lib\net461\PowerUp.EF6.dll" />
+				<file src="bin\Release\PowerUp.EF6.pdb" target="lib\net461\PowerUp.EF6.pdb" />
+		</files>
 </package>

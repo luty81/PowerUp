@@ -1,8 +1,15 @@
 version: 1.0.{build}
 configuration: Release
+
 before_build:
-- cmd: nuget restore PowerUp.EF6\PowerUp.EF6.csproj
+- cmd: nuget restore PowerUp.EF6\PowerUp.EF6.csproj -PackagesDirectory ..\packages
+
 build:
   project: PowerUp.EF6\PowerUp.EF6.csproj
-  #publish_nuget: true
   verbosity: minimal
+
+before_package:
+- ps: nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp.EF6\PowerUp.EF.nuspec
+
+artifacts:
+- path: '**\PowerUp.EF*.nupkg'
