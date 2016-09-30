@@ -4,4 +4,5 @@ before_build:
 - cmd: nuget restore
 build:
   project: PowerUp.EF6\PowerUp.EF6.csproj
+  publish_nuget: true
   verbosity: minimal

@@ -17,6 +17,11 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestProject", "TestProject\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Mvc", "PowerUp.Mvc\PowerUp.Mvc.csproj", "{D64FEB67-83B7-42D6-B124-42D66A6C308C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D50B1D52-08CD-4939-8F86-848F8B975003}"
+	ProjectSection(SolutionItems) = preProject
+		appveyor.yml = appveyor.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
