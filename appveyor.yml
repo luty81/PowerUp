@@ -1,8 +1,8 @@
 version: 1.0.{build}
 configuration: Release
 before_build:
-- cmd: nuget restore
+- cmd: nuget restore PowerUp.EF6\PowerUp.EF6.csproj
 build:
   project: PowerUp.EF6\PowerUp.EF6.csproj
-  publish_nuget: true
+  #publish_nuget: true
   verbosity: minimal
