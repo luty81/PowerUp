@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="EntityConfiguration\BaseEntityConfiguration.cs" />
     <Compile Include="EntityConfiguration\EntityRelationship.cs" />
+    <Compile Include="EntityConfiguration\EntityRelationshipFactory.cs" />
     <Compile Include="EntityConfiguration\EntityRelationshipManyToMany.cs" />
     <Compile Include="EntityConfiguration\EntityRelationshipOneToOne.cs" />
     <Compile Include="EntityConfiguration\EntityRelationshipOptional.cs" />

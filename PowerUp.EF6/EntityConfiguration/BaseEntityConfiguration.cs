@@ -55,15 +55,23 @@ namespace PowerUp.EF6.EntityConfiguration
 					FK.RightCollection, FK.LeftCollection, FK.LeftKey, FK.RightKey, FK.RelationshipName);
 		}
 
-		protected void RequiredColumn<TProperty>(params Expression<Func<T, TProperty>>[] properties)
+		protected void RequiredColumns<TProperty>(params Expression<Func<T, TProperty>>[] properties)
 			where TProperty : struct
 		{
 			properties.ToList().ForEach(p => Property(p).IsRequired());
 		}
 
-		protected void RequiredColumn(params Expression<Func<T, string>>[] properties)
+		protected void RequiredTextColumns(params Expression<Func<T, string>>[] properties)
 		{
 			properties.ToList().ForEach(p => Property(p).IsRequired());
+		}
+
+		protected void NotEmptyTextColumns(params Expression<Func<T, string>> [] properties)
+		{
+			Action<Expression<Func<T, string>>> ShouldNotBeEmpty =
+				p => Property(p).IsRequired().HasColumnAnnotation("MinLengthAttribute", 1);
+
+			properties.ToList().ForEach(ShouldNotBeEmpty);
 		}
 	}
 }

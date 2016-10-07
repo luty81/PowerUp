@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -7,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace PowerUp.EF6.EntityConfiguration
 {
-	public class EntityRelationshipManyToMany<TLeft, TRight, TLeftKey, TRightKey>
+	public class EntityRelationshipManyToMany<TLeft, TRight, TLeftKey, TRightKey>: IEntityRelationship<TLeft>
+		where TLeft : class
 		where TRight : class
 		where TLeftKey : struct
 		where TRightKey : struct
@@ -30,6 +32,11 @@ namespace PowerUp.EF6.EntityConfiguration
 			LeftKey = leftKey;
 			RightKey = rightKey;
 			RelationshipName = relationshipName;
+		}
+
+		public void Configure(EntityTypeConfiguration<TLeft> entityConfiguration)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
