@@ -8,6 +8,5 @@ build:
   verbosity: minimal
 before_package:
 - ps: >-
-    - ps: nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp\PowerUp.nuspec
-
-    - ps: nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp.EF6\PowerUp.EF.nuspec
+    nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp\PowerUp.nuspec
+	nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp.EF6\PowerUp.EF.nuspec
