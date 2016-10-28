@@ -4,7 +4,6 @@ before_build:
 - cmd: nuget restore -PackagesDirectory ..\PowerUp\packages
 build:
   project: PowerUp.sln
-  publish_nuget: true
   verbosity: minimal
 before_package:
 - ps: >-
@@ -12,4 +11,4 @@ before_package:
 
     nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp.EF6\PowerUp.EF.nuspec
 artifacts:
-- path: '**\PowerUp*.nupkg'
+- path: 'PowerUp*.nupkg'
