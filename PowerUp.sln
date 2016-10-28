@@ -11,16 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Tests", "PowerUp.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Mvc.Security", "PowerUp.Mvc.Security\PowerUp.Mvc.Security.csproj", "{2BECFBEF-6718-4B8B-9227-EF0C238C091B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PowerUp.Mvc.WebComponents", "PowerUp.Mvc.WebComponents\PowerUp.Mvc.WebComponents.xproj", "{066E64DE-D4B7-4283-A43C-CE8EC07E1866}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestProject", "TestProject\TestProject.xproj", "{6C9C9CB2-CE97-40CC-BA5E-CB6F7855F34A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Mvc", "PowerUp.Mvc\PowerUp.Mvc.csproj", "{D64FEB67-83B7-42D6-B124-42D66A6C308C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D50B1D52-08CD-4939-8F86-848F8B975003}"
 	ProjectSection(SolutionItems) = preProject
-		appveyor.PowerUp.EF.yml = appveyor.PowerUp.EF.yml
-		appveyor.PowerUp.yml = appveyor.PowerUp.yml
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
@@ -46,14 +40,6 @@ Global
 		{2BECFBEF-6718-4B8B-9227-EF0C238C091B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BECFBEF-6718-4B8B-9227-EF0C238C091B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BECFBEF-6718-4B8B-9227-EF0C238C091B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{066E64DE-D4B7-4283-A43C-CE8EC07E1866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{066E64DE-D4B7-4283-A43C-CE8EC07E1866}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{066E64DE-D4B7-4283-A43C-CE8EC07E1866}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{066E64DE-D4B7-4283-A43C-CE8EC07E1866}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C9C9CB2-CE97-40CC-BA5E-CB6F7855F34A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C9C9CB2-CE97-40CC-BA5E-CB6F7855F34A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C9C9CB2-CE97-40CC-BA5E-CB6F7855F34A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C9C9CB2-CE97-40CC-BA5E-CB6F7855F34A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D64FEB67-83B7-42D6-B124-42D66A6C308C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D64FEB67-83B7-42D6-B124-42D66A6C308C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D64FEB67-83B7-42D6-B124-42D66A6C308C}.Release|Any CPU.ActiveCfg = Release|Any CPU

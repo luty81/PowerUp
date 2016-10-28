@@ -1,10 +1,7 @@
 version: 1.0.{build}
 configuration: Release
 before_build:
-- cmd: >-
-    nuget restore PowerUp\PowerUp.csproj -PackagesDirectory ..\PowerUp\packages
-
-    nuget restore PowerUp.EF6\PowerUp.EF6.csproj -PackagesDirectory ..\PowerUp\packages
+- cmd: nuget restore -PackagesDirectory ..\PowerUp\packages
 build:
   project: PowerUp.sln
   publish_nuget: true
