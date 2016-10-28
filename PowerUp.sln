@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Mvc", "PowerUp.Mvc\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D50B1D52-08CD-4939-8F86-848F8B975003}"
 	ProjectSection(SolutionItems) = preProject
+		appveyor.PowerUp.EF.yml = appveyor.PowerUp.EF.yml
+		appveyor.PowerUp.yml = appveyor.PowerUp.yml
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject

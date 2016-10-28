@@ -1,0 +1,10 @@
+version: 1.0.{build}
+configuration: Release
+before_build:
+- cmd: nuget restore PowerUp\PowerUp.csproj -PackagesDirectory ..\PowerUp\packages
+build:
+  project: PowerUp\PowerUp.csproj
+  publish_nuget: true
+  verbosity: minimal
+before_package:
+- ps: '- ps: nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp\PowerUp.nuspec'
