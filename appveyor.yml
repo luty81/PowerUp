@@ -9,4 +9,5 @@ build:
 before_package:
 - ps: >-
     nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp\PowerUp.nuspec
-	nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp.EF6\PowerUp.EF.nuspec
+
+    nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp.EF6\PowerUp.EF.nuspec
