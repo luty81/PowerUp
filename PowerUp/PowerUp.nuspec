@@ -7,8 +7,8 @@
 		<authors>Luciano Fernandes</authors>
 		<owners>Luciano Fernandes</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>PowerUp Core and extensions for Entity Framework 6</description>
-		<copyright>Copyright ©  2016</copyright>
+		<description>Extensions and helpers for .NET</description>
+		<copyright>Copyright ©2016</copyright>
 		<dependencies>
 				<dependency id="SharpTestsEx" version="1.2.1" />
 		</dependencies>
