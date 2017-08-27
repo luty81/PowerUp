@@ -159,7 +159,7 @@ namespace PowerUp.EF6
                 order => new IndexAnnotation(new IndexAttribute(indexName) { IsUnique = true, Order = order });
 
             self.Property(column1Selector).IsRequired().HasColumnAnnotation(IndexAnnotation.AnnotationName, indexAnnotation(1));
-            self.Property(column1Selector).IsRequired().HasColumnAnnotation(IndexAnnotation.AnnotationName, indexAnnotation(2));
+            self.Property(column2Selector).IsRequired().HasColumnAnnotation(IndexAnnotation.AnnotationName, indexAnnotation(2));
 
             return self;
         }
