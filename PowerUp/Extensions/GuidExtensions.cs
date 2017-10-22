@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PowerUp.Extensions
+namespace PowerUp
 {
     public static class GuidExtensions
     {
