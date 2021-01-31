@@ -5,15 +5,16 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Reflection;
-using System.Web;
-using System.Web.Mvc;
 using PowerUp.Mvc.Annotations;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Html;
+using System.Web;
 
 namespace PowerUp.Mvc
 {
     public static class HtmlExtensions
     {
-        public static IHtmlString TextFieldFor<TModel, TField>(this HtmlHelper<TModel> html, Expression<Func<TModel, TField>> fieldSelector)
+        public static HtmlString TextFieldFor<TModel, TField>(this HtmlHelper<TModel> html, Expression<Func<TModel, TField>> fieldSelector)
         {
             var field = ((fieldSelector as LambdaExpression).Body as MemberExpression).Member;
 
@@ -29,37 +30,32 @@ namespace PowerUp.Mvc
             var model = html.ViewData.Model;
             var fieldValue = model == null ? "" : model.GetPropertyValue<string>(field.Name);
 
-            var sectionBuilder = new StringBuilder();
-            sectionBuilder.AppendLine("<section>");
-            sectionBuilder.AppendLine("\t<label class='input'>");
-            sectionBuilder.AppendFormat("\t\t<i class='{0}'></i>", faIcon);
-            sectionBuilder.AppendFormat("\t\t<input class='fix-placeholder' type='{2}' id='{0}' name='{0}' placeholder='{1}' value='{3}' />", field.Name, placeholder, inputType, fieldValue);
-            sectionBuilder.AppendLine("\t</label>");
-            sectionBuilder.AppendLine("</section>");
-            return MvcHtmlString.Create(sectionBuilder.ToString());
+            var htmlBuilder = new HtmlContentBuilder()
+                .AppendLine("<section>")
+                .AppendLine("<label class='input'>")
+                .AppendLine($"<i class='{faIcon}'></i>")
+                .AppendLine($"<input class='fix-placeholder' type='{inputType}' id='{field.Name}' name='{field.Name}' placeholder='{placeholder}' value='{fieldValue}' />")
+                .AppendLine("</label>")
+                .AppendLine("</section>");
+            
+            return new HtmlString(htmlBuilder.ToString());
         }
 
-        public static IHtmlString FormBlockTextFieldFor<TModel, TField>(this HtmlHelper<TModel> html, Expression<Func<TModel, TField>> fieldSelector)
+        public static HtmlString FormBlockTextFieldFor<TModel, TField>(this HtmlHelper<TModel> html, Expression<Func<TModel, TField>> fieldSelector)
         {
-            var fieldInfo = new FieldInfo(fieldSelector, html.ViewData.Model);
-            var sectionBuilder = new StringBuilder();
+            var f = new FieldInfo(fieldSelector, html.ViewData.Model);
 
-            sectionBuilder.AppendLine("<div class='input-group margin-bottom-20'>");
+            var htmlBuilder = new HtmlContentBuilder()
+                .Append("$<div class='input-group margin-bottom-20'>").AppendLine("\t")
+                    .Append("$<span class='input-group-addon rounded-left'>").AppendLine("\t\t")
+                    .Append($"<i class='{f.FontAwesomeIcon}'></i>".Replace("icon-append", "")).AppendLine("\t")
+                .Append($"</span>").AppendLine("\t")
+                .Append($"<input type='{f.InputType}' ")
+                    .Append($"class='form-control rounded-right fix-placeholder'")
+                    .Append($"name='{f.FieldName}' placeholder='{f.Placeholder}' value='{f.FieldValue}' {f.CustomStyle}/>")
+                .AppendLine("</div>");
 
-            sectionBuilder.AppendLine("\t<span class='input-group-addon rounded-left'>");
-            sectionBuilder.AppendFormat("\t\t<i class='{0}'></i>", fieldInfo.FontAwesomeIcon.Replace("icon-append", ""));
-            sectionBuilder.AppendLine("\t</span>");
-            sectionBuilder.AppendFormat(
-                "\t\t<input type='{0}' class='form-control rounded-right fix-placeholder' name='{1}' placeholder='{2}' value='{3}' {4}/>",
-                fieldInfo.InputType,
-                fieldInfo.FieldName,
-                fieldInfo.Placeholder,
-                fieldInfo.FieldValue,
-                fieldInfo.CustomStyle);
-
-            sectionBuilder.AppendLine("</div>");
-
-            return MvcHtmlString.Create(sectionBuilder.ToString());
+            return new HtmlString(htmlBuilder.ToString());
         }
     }
 }

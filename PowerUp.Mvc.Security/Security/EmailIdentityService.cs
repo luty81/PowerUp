@@ -1,28 +1,44 @@
-﻿using Microsoft.AspNet.Identity;
+﻿
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PowerUp.Mvc.Security
 {
-    public class EmailIdentityService: IIdentityMessageService
+    public class EmailIdentityService: SendGrid.ISendGridClient
     {
-        public Task SendAsync(IdentityMessage message)
+        public string UrlPath { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string Version { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public string MediaType { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+        public AuthenticationHeaderValue AddAuthorization(KeyValuePair<string, string> header)
         {
-            // Plug in your email service here to send an email.
-            var sendGridApiKey = ConfigurationManager.AppSettings["SendGridApiKey"].ToString();
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> MakeRequest(HttpRequestMessage request, CancellationToken cancellationToken = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Response> RequestAsync(BaseClient.Method method, string requestBody = null, string queryParams = null, string urlPath = null, CancellationToken cancellationToken = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<Response> SendEmailAsync(SendGridMessage message, CancellationToken cancellationToken = default)
+        {
             var sendGridSender = ConfigurationManager.AppSettings["SendGridMailFrom"].ToString();
-            dynamic sg = new SendGridAPIClient(sendGridApiKey);
-            var body = new Content("text/plain", message.Body);
-            var mail = new Mail(new Email(sendGridSender), message.Subject, new Email(message.Destination), body);
-            dynamic response = sg.client.mail.send.post(requestBody: mail.Get());
-            
-            return Task.FromResult(0);
+            message.From = new EmailAddress(sendGridSender);
+
+            var sendGridApiKey = ConfigurationManager.AppSettings["SendGridApiKey"].ToString();
+            return await new SendGridClient(sendGridApiKey)
+                .SendEmailAsync(message, cancellationToken);
         }
     }
 }

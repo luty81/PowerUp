@@ -1,18 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using PowerUp;
-using System;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharpTestsEx;
+using Xunit;
 
 namespace PowerUp.Tests
 {
-    [TestClass]
     public class LinqExtensionsTests
     {
-        [TestMethod]
+        [Fact]
         public void GroupEveryTest()
         {
             var months = new[] { "", "jan", "feb", "mar", "apr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dec" };

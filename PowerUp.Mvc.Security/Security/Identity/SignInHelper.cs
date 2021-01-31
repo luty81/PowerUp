@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Owin;
 
 namespace PowerUp.Mvc.Security.Identity
 {
     public class SignInHelper
     {
         public ApplicationUserManager UserManager { get; private set; }
-        public IAuthenticationManager AuthenticationManager { get; private set; }
+
+        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            var identity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
+        }
 
         public async Task SignInAsync(ApplicationUser user, bool isPersistent, bool rememberBrowser)
         {

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharpTestsEx;
 
 namespace PowerUp
 {
@@ -11,18 +6,26 @@ namespace PowerUp
     {
         public static void ShouldBeToday(this DateTime self)
         {
-            self.Date.Should().Be(DateTime.Today);
+            if (self.Date != DateTime.Today)
+                Fail(DateTime.Today, self.Date);
         }
 
         public static void ShouldBeNull<T>(this T? self) where T : struct
         {
-            self.HasValue.Should().Be.False();
+            if (self.HasValue)
+                Fail($"A null reference was expected, but an instance of {self.Value.GetType().Name} was found.");
         }
 
         public static void ShouldBeNotNull<T>(this T? self) where T : struct
         {
-            self.HasValue.Should().Be.True();
+            if (self.HasValue)
+                return;
+
+            Fail($"An instance of {typeof(T).Name} was expected, but a null reference was found.");
         }
+
+        private static void Fail(object expected, object found) => Fail($"Expected: {expected} Actual: {found}.");
+        private static void Fail(string message) => throw new Exception($"{message}");
 
     }
 }
