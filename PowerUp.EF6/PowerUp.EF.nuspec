@@ -2,20 +2,20 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
 	<metadata>
 		<id>PowerUp.EF</id>
-		<version>1.1.0</version>
+		<version>1.5.0</version>
 		<title>PowerUp.EF</title>
 		<authors>Luciano Fernandes</authors>
-		<owners>Luciano Fernandes</owners>
+		<owners>github.com/luty81</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>PowerUp Core and extensions for Entity Framework 6</description>
-		<copyright>Copyright ©  2016</copyright>
+		<copyright>Copyright ©2021</copyright>
 		<dependencies>
-				<dependency id="EntityFramework" version="6.1.3" />
-				<dependency id="PowerUp.Core" version="1.0.0" />
+				<dependency id="EntityFramework" version="6.4.4" />
+				<dependency id="PowerUp.Core" version="1.5.0" />
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="bin\Release\PowerUp.EF6.dll" target="lib\net461\PowerUp.EF6.dll" />
-		<file src="bin\Release\PowerUp.EF6.pdb" target="lib\net461\PowerUp.EF6.pdb" />
+		<file src="bin\Release\net5.0\PowerUp.EF6.dll" target="lib\net461\PowerUp.EF6.dll" />
+		<file src="bin\Release\net5.0\PowerUp.EF6.pdb" target="lib\net461\PowerUp.EF6.pdb" />
 	</files>
 </package>
