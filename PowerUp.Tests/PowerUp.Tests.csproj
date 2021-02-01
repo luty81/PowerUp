@@ -23,8 +23,4 @@
       <Name>PowerUp</Name>
     </ProjectReference>
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="SqlBuilderTests\" />
-  </ItemGroup>
 </Project>

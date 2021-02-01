@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
-using PowerUp.Sql;
+using PowerUp.SQL;
 using Xunit;
 
-namespace PowerUp.Tests.Sql
+namespace PowerUp.Tests.SQL
 {
-    public class SqlForTests
+    public class SqlBuilderTests
     {
         [Fact]
         public void GeneratesSqlSelectAllFromTypeTest()
         {
-            var sqlSelect = new SqlFor<SampleType>().Select;
-
+            var sqlSelect = new SqlBuilder<SampleType>().Done();
             
             sqlSelect.Should().NotBeNullOrEmpty();
             var sqlSelectLines = sqlSelect.Split(Environment.NewLine);
@@ -23,7 +22,7 @@ namespace PowerUp.Tests.Sql
         [Fact]
         public void GeneratesSqlSelectAllFromType_ResolveColumnNamesTest()
         {
-            var sqlSelect = new SqlFor<SampleType>(ColumnsMode.ResolveNames).Select;
+            var sqlSelect = new SqlBuilder<SampleType>(ColumnsMode.ResolveNames).SelectAll;
 
             sqlSelect.Should().NotBeNullOrEmpty();
             var sqlSelectLines = sqlSelect.Split(Environment.NewLine);
@@ -34,7 +33,7 @@ namespace PowerUp.Tests.Sql
         [Fact]
         public void GeneratesSqlSelectAllFromType_ResolveAliasesAndColumnNamesTest()
         {
-            var sqlSelect = new SqlFor<SampleType>(ColumnsMode.ResolveAliasesAndNames).Select;
+            var sqlSelect = new SqlBuilder<SampleType>(ColumnsMode.ResolveAliasesAndNames).SelectAll;
 
             sqlSelect.Should().NotBeNullOrEmpty();
             var sqlSelectLines = sqlSelect.Split(Environment.NewLine);
@@ -46,7 +45,7 @@ namespace PowerUp.Tests.Sql
         public void GeneratesSqlSelectWithWhereTest()
         {
             var sqlLines = 
-                new SqlFor<SampleType>(ColumnsMode.ResolveAliasesAndNames)
+                new SqlBuilder<SampleType>(ColumnsMode.ResolveAliasesAndNames)
                     .Where(x => x.Id)
                     .Done()
                     .Split(Environment.NewLine);
@@ -56,6 +55,25 @@ namespace PowerUp.Tests.Sql
             sqlLines.ElementAt(1).Should().Be("FROM SampleType ST ");
             sqlLines.ElementAt(2).Should().Be("WHERE ST.Id = @Id ;");
         
+        }
+
+        [Fact]
+        public void GeneratesSqlSelectWithBinaryExpressionWhereTest()
+        {
+            var sql =
+                new SqlBuilder<SampleType>(ColumnsMode.ResolveAliasesAndNames)
+                    .Where(x => x.Id)
+                        .And(x => x.Name)
+                        .Done();
+
+            var sqlLines = sql.Split(Environment.NewLine).Select(x => x.Trim());
+
+            sqlLines.Count().Should().Be(4);
+            sqlLines.ElementAt(0).Should().Be("SELECT ST.Id, ST.Name, ST.Active");
+            sqlLines.ElementAt(1).Should().Be("FROM SampleType ST");
+            sqlLines.ElementAt(2).Should().Be("WHERE ST.Id = @Id");
+            sqlLines.ElementAt(3).Should().Be("AND ST.Name = @Name ;");
+
         }
 
         class SampleType

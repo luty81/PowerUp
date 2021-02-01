@@ -4,12 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace PowerUp.Sql
+namespace PowerUp.SQL
 {
-    public class ObjectToSqlCommander
+    public class SqlCommandBuilder
     {
         public IEnumerable<string> AssignedProperties { get; private set; }
-        
         
         public string UpdateCommand() => GetUpdateCommandFor(_object.GetType().Name);
         public string GetUpdateCommandFor(string tableName, bool ignoreUnassignedProperties = true)
@@ -47,31 +46,36 @@ namespace PowerUp.Sql
             static string Params(string columnName) => $"@{columnName}";
             static string ByComma(IEnumerable<string> columns) => string.Join(", ", columns);
         }
-        public ObjectToSqlCommander(object @object)
+
+
+        public SqlCommandBuilder(object @object)
         {
             _object = @object;
             _properties = _object.GetType().GetProperties(Getters);
             AssignedProperties = _properties.Where(HasValue).Select(p => p.Name);
         }
 
-        private BindingFlags Getters => BindingFlags.Public | BindingFlags.Instance | BindingFlags.GetProperty;
-        private object _object;
-        private readonly PropertyInfo[] _properties;
+
+        private static BindingFlags Getters => 
+            BindingFlags.Public | 
+            BindingFlags.Instance | 
+            BindingFlags.GetProperty;
+
         private bool HasValue(PropertyInfo propertyInfo)
         {
             var @value = propertyInfo.GetValue(_object);
-            if (@value == null)
-                return false;
+            if (@value == null) return false;
 
-            
             if (propertyInfo.PropertyType.IsValueType)
-            {
-                // If the value is equal to the type default value, then we assume it is unassigned
+                // If the value is the type default, then we assume it is unassigned
                 return ! Activator.CreateInstance(@value.GetType()).Equals(@value);
-            }
 
             return true;
         }
+
+        private object _object;
+        private readonly PropertyInfo[] _properties;
+
     }
 
 }

@@ -17,6 +17,10 @@ namespace PowerUp
         public static string Minify(this string self) => 
             self.Trim().ToLower();
 
+        public static string FirstCharacter(this string self) =>
+            self.First().ToString();
+
+
         public static IEnumerable<string> SplitByPascalCase(this string self) => 
             Regex.Replace(self, @"([A-Z])", " $1").SplitBy(' ');
 

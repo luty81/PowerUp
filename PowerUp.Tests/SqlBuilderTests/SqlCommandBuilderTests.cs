@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
-using PowerUp.Sql;
+using PowerUp.SQL;
 using Xunit;
 
-namespace PowerUp.Tests.Sql
+namespace PowerUp.Tests.SQL
 {
-    public class ObjectToSqlCommanderTests
+    public class SqlCommandBuilderTests
     {
         [Fact]
         public void GeneratesSqlUpdateFromObjectTest()
@@ -14,7 +14,7 @@ namespace PowerUp.Tests.Sql
             var sampleObject = new { Id = 1, Name = "John Doe", Email = (string)null, PhoneNumber = "+55123123123" };
 
             var updateCommand = 
-                new ObjectToSqlCommander(sampleObject)
+                new SqlCommandBuilder(sampleObject)
                     .GetUpdateCommandFor("IdentityUser");
 
             var commandLines = updateCommand.Trim().Split(Environment.NewLine);
@@ -37,7 +37,7 @@ namespace PowerUp.Tests.Sql
             };
 
             var commandColumns = 
-                new ObjectToSqlCommander(sampleObject)
+                new SqlCommandBuilder(sampleObject)
                     .AssignedProperties;
             
             commandColumns.Count().Should().Be(4);
@@ -52,7 +52,7 @@ namespace PowerUp.Tests.Sql
         public void WhenThereAreNoAssignedFields_NoUpdateSqlCommandShouldBeGenerated()
         {
             var sampleObject = new object { };
-            var sqlCommander = new ObjectToSqlCommander(sampleObject);
+            var sqlCommander = new SqlCommandBuilder(sampleObject);
 
             var command = sqlCommander.GetUpdateCommandFor("IdentityUser");
 
@@ -77,7 +77,7 @@ namespace PowerUp.Tests.Sql
             };
 
             var insertCommand =
-                new ObjectToSqlCommander(sampleObject)
+                new SqlCommandBuilder(sampleObject)
                     .GetInsertCommandFor("IdentityUser");
 
             var commandLines = insertCommand.Trim().Split(Environment.NewLine);
