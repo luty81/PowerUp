@@ -5,10 +5,11 @@
 		<version>1.5.0</version>
 		<title>PowerUp For .NET 5</title>
 		<authors>Luciano Fernandes</authors>
-		<owners>github/luty81</owners>
+		<owners>github.com/luty81</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>Extensions and helpers for .NET</description>
 		<copyright>Copyright ©2021</copyright>
+    <repository type="git" url="https://github.com/luty81/PowerUp" />
 	</metadata>
 	<files>
 		<file src="bin\Release\net5.0\PowerUp.dll" target="lib\net5.0\PowerUp.dll" />
