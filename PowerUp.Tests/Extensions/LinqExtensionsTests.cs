@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace PowerUp.Tests
+namespace PowerUp.Tests.Extensions
 {
     public class LinqExtensionsTests
     {

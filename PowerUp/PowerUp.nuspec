@@ -11,7 +11,7 @@
 		<copyright>Copyright ©2021</copyright>
 	</metadata>
 	<files>
-		<file src="bin\Release\net5.0\PowerUp.dll" target="lib\net461\PowerUp.dll" />
-		<file src="bin\Release\net5.0\PowerUp.pdb" target="lib\net461\PowerUp.pdb" />
+		<file src="bin\Release\net5.0\PowerUp.dll" target="lib\net5.0\PowerUp.dll" />
+		<file src="bin\Release\net5.0\PowerUp.pdb" target="lib\net5.0\PowerUp.pdb" />
 	</files>
 </package>

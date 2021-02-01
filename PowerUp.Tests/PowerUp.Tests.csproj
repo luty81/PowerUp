@@ -18,13 +18,13 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\PowerUp.EF6\PowerUp.EF6.csproj">
-      <Project>{839ba677-173d-4447-967b-8dde61c81090}</Project>
-      <Name>PowerUp.EF6</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PowerUp\PowerUp.csproj">
       <Project>{66022726-b02c-4673-90ae-6c68fa6c33ba}</Project>
       <Name>PowerUp</Name>
     </ProjectReference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="SqlBuilderTests\" />
   </ItemGroup>
 </Project>

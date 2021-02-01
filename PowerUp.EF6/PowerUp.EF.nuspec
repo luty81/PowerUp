@@ -15,7 +15,7 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="bin\Release\net5.0\PowerUp.EF6.dll" target="lib\net461\PowerUp.EF6.dll" />
-		<file src="bin\Release\net5.0\PowerUp.EF6.pdb" target="lib\net461\PowerUp.EF6.pdb" />
+		<file src="bin\Release\net5.0\PowerUp.EF6.dll" target="lib\net5.0\PowerUp.EF6.dll" />
+		<file src="bin\Release\net5.0\PowerUp.EF6.pdb" target="lib\net5.0\PowerUp.EF6.pdb" />
 	</files>
 </package>
