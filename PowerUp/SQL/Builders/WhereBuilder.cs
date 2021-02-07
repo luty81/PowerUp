@@ -34,7 +34,7 @@ namespace PowerUp.SQL
         public override string ToString() =>
             _builder.ToString();
         
-        public WhereBuilder(SqlBuilder<T> sql)
+        public WhereBuilder(SelectBuilder<T> sql)
         {
             _sql = sql;
         }
@@ -47,14 +47,12 @@ namespace PowerUp.SQL
             else if (propertySelector.Body is MemberExpression expression)
                 prop = expression.ToString().Split('.').LastOrDefault();
             
-            
-            
             var alias = _sql.TableAlias;
             var column = alias.IsEmpty() ? prop : $"{alias}.{prop}";
             return $" {column} = @{prop} ";
         }
 
-        private readonly SqlBuilder<T> _sql;
+        private readonly SelectBuilder<T> _sql;
         private readonly StringBuilder _builder = new StringBuilder();
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PowerUp
 {
@@ -24,8 +26,25 @@ namespace PowerUp
             Fail($"An instance of {typeof(T).Name} was expected, but a null reference was found.");
         }
 
-        private static void Fail(object expected, object found) => Fail($"Expected: {expected} Actual: {found}.");
+        public static void ShouldBe<T>(this IEnumerable<T> foundList, params T[] expectedItems) where T : class
+        {
+            if (foundList.Count() != expectedItems.Length)
+                Fail($"A mismatch list size was found. Expected size: {expectedItems.Length}. Found: {foundList.Count()}");
+
+            expectedItems
+                .Select((expected, itemIndex) => new { expected, itemIndex })
+                .ForEach(x =>
+                {
+                    var found = foundList.ElementAt(x.itemIndex);
+                    if (! x.expected.Equals(found))
+                        Fail($"{DefaultFailMessage(x.expected, found)} at {x.itemIndex} position");
+                });
+        }
+
+        private static void Fail(object expected, object found) => Fail(DefaultFailMessage(expected, found));
         private static void Fail(string message) => throw new Exception($"{message}");
+
+        private static string DefaultFailMessage(object expected, object found) => $"Expected: {expected} Actual: {found}";
 
     }
 }

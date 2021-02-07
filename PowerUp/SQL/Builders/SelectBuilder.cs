@@ -8,9 +8,9 @@ using static PowerUp.SQL.ColumnsMode;
 
 namespace PowerUp.SQL
 {
-    public class SqlBuilder<T> where T : class
+    public class SelectBuilder<T> where T : class
     {
-        public SqlBuilder<T> Select => this;
+        public SelectBuilder<T> Select => this;
 
         public string SelectAll => Done();
 
@@ -31,7 +31,7 @@ namespace PowerUp.SQL
                     .Join();
 
 
-        public SqlBuilder(ColumnsMode mode = Star)
+        public SelectBuilder(ColumnsMode mode = Star)
         {
             _mode = mode;
             _where = new WhereBuilder<T>(this);

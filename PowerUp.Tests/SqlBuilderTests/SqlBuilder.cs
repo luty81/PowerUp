@@ -11,7 +11,7 @@ namespace PowerUp.Tests.SQL
         [Fact]
         public void GeneratesSqlSelectAllFromTypeTest()
         {
-            var sqlSelect = new SqlBuilder<SampleType>().Done();
+            var sqlSelect = new SelectBuilder<SampleType>().Done();
             
             sqlSelect.Should().NotBeNullOrEmpty();
             var sqlSelectLines = sqlSelect.Split(Environment.NewLine);
@@ -22,7 +22,7 @@ namespace PowerUp.Tests.SQL
         [Fact]
         public void GeneratesSqlSelectAllFromType_ResolveColumnNamesTest()
         {
-            var sqlSelect = new SqlBuilder<SampleType>(ColumnsMode.ResolveNames).SelectAll;
+            var sqlSelect = new SelectBuilder<SampleType>(ColumnsMode.ResolveNames).SelectAll;
 
             sqlSelect.Should().NotBeNullOrEmpty();
             var sqlSelectLines = sqlSelect.Split(Environment.NewLine);
@@ -33,7 +33,7 @@ namespace PowerUp.Tests.SQL
         [Fact]
         public void GeneratesSqlSelectAllFromType_ResolveAliasesAndColumnNamesTest()
         {
-            var sqlSelect = new SqlBuilder<SampleType>(ColumnsMode.ResolveAliasesAndNames).SelectAll;
+            var sqlSelect = new SelectBuilder<SampleType>(ColumnsMode.ResolveAliasesAndNames).SelectAll;
 
             sqlSelect.Should().NotBeNullOrEmpty();
             var sqlSelectLines = sqlSelect.Split(Environment.NewLine);
@@ -45,7 +45,7 @@ namespace PowerUp.Tests.SQL
         public void GeneratesSqlSelectWithWhereTest()
         {
             var sqlLines = 
-                new SqlBuilder<SampleType>(ColumnsMode.ResolveAliasesAndNames)
+                new SelectBuilder<SampleType>(ColumnsMode.ResolveAliasesAndNames)
                     .Where(x => x.Id)
                     .Done()
                     .Split(Environment.NewLine);
@@ -61,7 +61,7 @@ namespace PowerUp.Tests.SQL
         public void GeneratesSqlSelectWithBinaryExpressionWhereTest()
         {
             var sql =
-                new SqlBuilder<SampleType>(ColumnsMode.ResolveAliasesAndNames)
+                new SelectBuilder<SampleType>(ColumnsMode.ResolveAliasesAndNames)
                     .Where(x => x.Id)
                         .And(x => x.Name)
                         .Done();

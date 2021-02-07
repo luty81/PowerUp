@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
+using PowerUp;
 using PowerUp.SQL;
 using Xunit;
 
@@ -11,17 +12,20 @@ namespace PowerUp.Tests.SQL
         [Fact]
         public void GeneratesSqlUpdateFromObjectTest()
         {
-            var sampleObject = new { Id = 1, Name = "John Doe", Email = (string)null, PhoneNumber = "+55123123123" };
+            var sampleObject = new 
+            { 
+                Id = 1, 
+                Name = "John Doe", 
+                Email = (string)null, 
+                PhoneNumber = "+55123123123" 
+            };
 
-            var updateCommand = 
-                new SqlCommandBuilder(sampleObject)
-                    .GetUpdateCommandFor("IdentityUser");
-
-            var commandLines = updateCommand.Trim().Split(Environment.NewLine);
-            commandLines.Count().Should().Be(3);
-            commandLines[0].Should().Be("UPDATE IdentityUser");
-            commandLines[1].Should().Be("SET Name = @Name, PhoneNumber = @PhoneNumber");
-            commandLines[2].Should().Be("WHERE Id = @Id");
+            new CommandBuilder(sampleObject)
+                .For<UpdateCommand>("IdentityUser").Trim().Lines()
+                .ShouldBe(
+                    "UPDATE IdentityUser",
+                    "SET Name = @Name, PhoneNumber = @PhoneNumber",
+                    "WHERE Id = @Id");
         }
 
         [Fact]
@@ -36,15 +40,10 @@ namespace PowerUp.Tests.SQL
                 UserName = (string)null
             };
 
-            var commandColumns = 
-                new SqlCommandBuilder(sampleObject)
-                    .AssignedProperties;
-            
-            commandColumns.Count().Should().Be(4);
-            commandColumns.Should().Contain("Id");
-            commandColumns.Should().Contain("Name");
-            commandColumns.Should().Contain("Birthday");
-            commandColumns.Should().Contain("UserId");
+            new CommandBuilder(sampleObject)
+                .AssignedProperties
+                .Select(p => p.Name)
+                .ShouldBe("Id", "Name", "Birthday", "UserId");
         }
 
 
@@ -52,12 +51,15 @@ namespace PowerUp.Tests.SQL
         public void WhenThereAreNoAssignedFields_NoUpdateSqlCommandShouldBeGenerated()
         {
             var sampleObject = new object { };
-            var sqlCommander = new SqlCommandBuilder(sampleObject);
+            var sqlCommander = new CommandBuilder(sampleObject);
 
-            var command = sqlCommander.GetUpdateCommandFor("IdentityUser");
+            sqlCommander
+                .For<UpdateCommand>("IdentityUser")
+                .Should().BeNull();
 
-            command.Should().BeNull();
-            sqlCommander.AssignedProperties.Should().BeNullOrEmpty();
+            sqlCommander
+                .AssignedProperties
+                .Should().BeNullOrEmpty();
         }
 
 
@@ -76,16 +78,28 @@ namespace PowerUp.Tests.SQL
                 UserName = (string)null
             };
 
-            var insertCommand =
-                new SqlCommandBuilder(sampleObject)
-                    .GetInsertCommandFor("IdentityUser");
-
-            var commandLines = insertCommand.Trim().Split(Environment.NewLine);
-            commandLines.Count().Should().Be(4);
-            commandLines[0].Should().Be("INSERT INTO IdentityUser ");
-            commandLines[1].Should().Be("(Id, Name, Email, PhoneNumber, Gender, Birthday, UserId)", commandLines[1]);
-            commandLines[2].Should().Be("VALUES");
-            commandLines[3].Should().Be("(@Id, @Name, @Email, @PhoneNumber, @Gender, @Birthday, @UserId)");
+            
+            new CommandBuilder(sampleObject)
+                .For<InsertCommand>("IdentityUser").Trim().Lines()
+                .ShouldBe(
+                    "INSERT INTO IdentityUser ",
+                    "(Id, Name, Email, PhoneNumber, Gender, Birthday, UserId)",
+                    "VALUES",
+                    "(@Id, @Name, @Email, @PhoneNumber, @Gender, @Birthday, @UserId)");
         }
+
+        [Fact]
+        public void DeleteCommandBuilderTest() =>
+            DeleteCommandFor<SampleEntity>.Build().Lines()
+                .ShouldBe("DELETE FROM SampleEntity", "WHERE Id = @Id");
+        
+
+        [Fact]
+        public void DeleteCommandBuilderCustomTableNameTest() => 
+            DeleteCommandFor<SampleEntity>.Build("sample_entity").Lines()
+                .ShouldBe("DELETE FROM sample_entity", "WHERE Id = @Id");
+
+        class SampleEntity { }
+
     }
 }

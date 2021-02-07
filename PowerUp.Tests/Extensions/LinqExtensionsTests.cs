@@ -11,29 +11,33 @@ namespace PowerUp.Tests.Extensions
         [Fact]
         public void GroupEveryTest()
         {
-            var months = new[] { "", "jan", "feb", "mar", "apr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dec" };
+            var months = new[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dec" };
 
 
-            var quarters = months.Skip(1).GroupEvery(3);
+            var quarters = months.GroupEvery(3);
 
             quarters.Count().Should().Be(4);
             quarters.Sum(x => x.Count()).Should().Be(12);
             quarters.ToList().TrueForAll(x => x.Count() == 3);
 
-            VerifyQuarter(quarters.ElementAt(0).ToList(), months[1], months[2], months[3]);
-            VerifyQuarter(quarters.ElementAt(1).ToList(), months[4], months[5], months[6]);
-            VerifyQuarter(quarters.ElementAt(2).ToList(), months[7], months[8], months[9]);
-            VerifyQuarter(quarters.ElementAt(3).ToList(), months[10], months[11], months[12]);
+            Verify(Quarter(1), "jan", "feb", "mar");
+            Verify(Quarter(2), "apr", "may", "jun");
+            Verify(Quarter(3), "jul", "ago", "sep");
+            Verify(Quarter(4), "oct", "nov", "dec");
+
+            string[] Quarter(int i) => quarters.ElementAt(i - 1).ToArray();
         }
 
-        private void VerifyQuarter(IEnumerable<string> foundMonths, params object[] expectedMonths)
-        {
-            var index = 0;
-            foreach(var expectedMonth in expectedMonths)
-            {
-                foundMonths.ElementAt(index).Should().Be(expectedMonth.ToString());
-                index += 1;
-            }
-        }
+        private void Verify(IEnumerable<string> foundMonths, params object[] expectedMonths) =>
+            foundMonths
+                .Select((item, index) => new { index, item })
+                .ForEach(found => expectedMonths.ElementAt(found.index).Should().Be(found.item));
     }
 }
+
+//var index = 0;
+//foreach(var expectedMonth in expectedMonths)
+//{
+//    foundMonths.ElementAt(index).Should().Be(expectedMonth.ToString());
+//    index += 1;
+//}
