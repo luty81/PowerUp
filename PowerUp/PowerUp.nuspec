@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2016/06/nuspec.xsd">
 	<metadata>
 		<id>PowerUp.Core</id>
-		<version>1.5.0</version>
-		<title>PowerUp For .NET 5</title>
+		<version>1.6.0</version>
+		<title>PowerUp For .NET 5 / .NET Core 3.1</title>
 		<authors>Luciano Fernandes</authors>
 		<owners>github.com/luty81</owners>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -11,10 +11,10 @@
 		<copyright>Copyright ©2021</copyright>
     <repository type="git" url="https://github.com/luty81/PowerUp" />
 	</metadata>
-	<files>
+  <files>
 		<file src="bin\Release\net5.0\PowerUp.dll" target="lib\net5.0\PowerUp.dll" />
 		<file src="bin\Release\net5.0\PowerUp.pdb" target="lib\net5.0\PowerUp.pdb" />
-    <file src="bin\Release\netcoreapp3.1\PowerUp.pdb" targer="lib\netcoreapp3.1\PowerUp.pdb" />
-    <file src="bin\Release\netcoreapp3.1\PowerUp.dll" targer="lib\netcoreapp3.1\PowerUp.dll" />
+    <file src="bin\Release\netcoreapp3.1\PowerUp.pdb" target="lib\netcoreapp3.1\PowerUp.pdb" />
+    <file src="bin\Release\netcoreapp3.1\PowerUp.dll" target="lib\netcoreapp3.1\PowerUp.dll" />
 	</files>
 </package>

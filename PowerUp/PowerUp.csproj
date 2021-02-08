@@ -2,8 +2,21 @@
   <PropertyGroup>
     <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-
     <RootNamespace>PowerUp</RootNamespace>
     <AssemblyName>PowerUp</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>PowerUp.Core</PackageId>
+    <Authors>github.com/luty81</Authors>
+    <PackageProjectUrl>github.com/luty81/PowerUp</PackageProjectUrl>
+    <PackageIcon>icon.PNG</PackageIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="icon.PNG">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 </Project>
