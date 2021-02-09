@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -16,7 +17,7 @@ namespace PowerUp.SQL
     {
         public string Build(string tableName, IEnumerable<string> columns) =>
             _builder
-                .AppendLine($"INSERT INTO {tableName} ")
+                .AppendLine($"INSERT INTO {tableName}")
                 .AppendLine($"({columns.JoinByComma()})")
                 .AppendLine("VALUES")
                 .AppendLine($"({columns.Select(@P).JoinByComma()})")
@@ -68,6 +69,9 @@ namespace PowerUp.SQL
         {
             _object = @object;
             Columns = _object.GetType().GetProperties(_getters);
+
+            var keyColumns = Columns.Where(c => c.GetCustomAttribute<KeyAttribute>() != null);
+
             AssignedProperties = Columns.Where(HasValue);
             if (ignoreUnassignedProperties)
                 Columns = AssignedProperties;

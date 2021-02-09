@@ -99,7 +99,21 @@ namespace PowerUp.Tests.SQL
             DeleteCommandFor<SampleEntity>.Build("sample_entity").Lines()
                 .ShouldBe("DELETE FROM sample_entity", "WHERE Id = @Id");
 
-        class SampleEntity { }
+        [Fact]
+        public void CommandBuilderShouldHandleEnumsProperly()
+        {
+            var entity = new SampleEntity { EntityType = EntityTypes.Fake };
+            SqlFor<SampleEntity>.GetInsert(entity).Lines().Join(" ")
+                .Should().Be("INSERT INTO SampleEntity (EntityType) VALUES (@EntityType) ");
+        }
+
+        class SampleEntity 
+        { 
+            public EntityTypes EntityType { get; set; }
+        }
+
+        enum EntityTypes { Dummy = 0, Fake = 1 }
+
 
     }
 }
