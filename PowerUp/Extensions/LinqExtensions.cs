@@ -22,6 +22,12 @@ namespace PowerUp
 
         public static void ForEach<T>(this IEnumerable<T> self, Action<T> action) =>
             self.ToList().ForEach(action);
+
+        public static bool NotContains<T>(this IEnumerable<T> self, T element) => 
+            false == self.Contains(element);
+
+        public static bool HasNo<T>(this IEnumerable<T> self, T element) => 
+            false == self.Any(x => EqualityComparer<T>.Default.Equals(x, element));    
     }
 
     class NGroupedItem<T>

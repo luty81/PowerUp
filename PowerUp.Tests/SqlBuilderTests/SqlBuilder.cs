@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using FluentAssertions;
 using PowerUp.SQL;
@@ -54,7 +55,6 @@ namespace PowerUp.Tests.SQL
             sqlLines.ElementAt(0).Should().Be("SELECT ST.Id, ST.Name, ST.Active ");
             sqlLines.ElementAt(1).Should().Be("FROM SampleType ST ");
             sqlLines.ElementAt(2).Should().Be("WHERE ST.Id = @Id ;");
-        
         }
 
         [Fact]

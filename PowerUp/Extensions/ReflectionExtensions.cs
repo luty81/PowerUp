@@ -4,49 +4,51 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-using System.Text;
-using System.Threading.Tasks;
+using static System.Reflection.BindingFlags;
 
 namespace PowerUp
 {
     public static class ReflectionExtensions
     {
-        public static bool HasAttribute<TAttribute>(this MemberInfo self) where TAttribute : Attribute
-        {
-            return self.GetCustomAttributes<TAttribute>().Any();
-        }
+        public static bool HasAttribute<TAttribute>(this MemberInfo self) 
+            where TAttribute : Attribute =>
+                self.GetCustomAttributes<TAttribute>().Any();
+        public static bool HasNotAttribute<TAttribute>(this MemberInfo self)
+            where TAttribute : Attribute =>
+                false == self.HasAttribute<TAttribute>();
 
-        public static TValue GetPropertyValue<TValue>(this object self, string propertyName)
-        {
-            return (TValue)self.GetType().GetProperty(propertyName).GetValue(self, null);
-        }
+        public static IEnumerable<PropertyInfo> GetPropertiesWith<T>(this Type self) 
+            where T : Attribute =>
+                self.GetProperties().Where(p => p.HasAttribute<T>());
 
-        public static object GetPropertyValue(this object self, string propertyName)
-        {
-            return self.GetType().GetProperty(propertyName).GetValue(self, null);
-        }
+        public static IEnumerable<PropertyInfo> Getters(this Type self) => self.GetProperties(OnlyGettersFilter);
 
+        public static BindingFlags OnlyGettersFilter => Public | Instance | GetProperty;
+
+
+
+        public static object GetPropertyValue(this object self, string propertyName) =>
+            self.GetType().GetProperty(propertyName).GetValue(self, null);
+
+        public static TValue GetPropertyValue<TValue>(this object self, string propertyName) =>
+            (TValue)GetPropertyValue(self, propertyName);
+        
         public static string GetExpressionTargetMemberName(this Expression self)
         {
-            if (self is LambdaExpression)
+            if (self is LambdaExpression lambda)
             {
-                var expressionBody = (self as LambdaExpression).Body;
-                if (expressionBody is MemberExpression)
-                {
-                    return (expressionBody as MemberExpression).Member.Name;
-                }
-
-                throw new InvalidOperationException(String.Format("Only MemberExpression is supported, but a {0} body type was provided.", expressionBody.GetType().Name));
+            
+                if (lambda.Body is MemberExpression member) 
+                    return member.Member.Name;
                 
+                throw Expected<MemberExpression>(lambda.Body);
             }
+            
+            throw Expected<LambdaExpression>(self);
 
-            throw new InvalidOperationException(String.Format("Only LambdaExpression is ´supported, but a {0} type was provided.", self.GetType().Name));
+            static Exception Expected<TExpected>(Expression exp) where TExpected : Expression =>
+                new InvalidOperationException(
+                    $"An {exp.GetType().Name} expression type was provided when a {typeof(TExpected).Name} was expected.");
         }
-
-        //public static bool HasAttribute<TAttribute>(this PropertyInfo self) where TAttribute : Attribute
-        //{
-        //    return self.GetCustomAttributes<TAttribute>().Any();
-        //}
-
     }
 }

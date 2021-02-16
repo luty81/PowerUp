@@ -8,13 +8,13 @@ namespace PowerUp.Tests.Extensions
 {
     public class LinqExtensionsTests
     {
+        private readonly string[] Months = 
+            new[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dec" };
+
         [Fact]
         public void GroupEveryTest()
         {
-            var months = new[] { "jan", "feb", "mar", "apr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dec" };
-
-
-            var quarters = months.GroupEvery(3);
+            var quarters = Months.GroupEvery(3);
 
             quarters.Count().Should().Be(4);
             quarters.Sum(x => x.Count()).Should().Be(12);
@@ -28,7 +28,27 @@ namespace PowerUp.Tests.Extensions
             string[] Quarter(int i) => quarters.ElementAt(i - 1).ToArray();
         }
 
-        private void Verify(IEnumerable<string> foundMonths, params object[] expectedMonths) =>
+        [Fact]
+        public void NotContainsTest()
+        {
+            Months.NotContains("wednesday").Should().Be(true);
+            new[] { 1, 3, 5 }.NotContains(2).Should().Be(true);
+
+            Months.NotContains("dec").Should().Be(false);
+            new[] { 1, 3, 5 }.NotContains(3).Should().Be(false);
+        }
+
+        [Fact]
+        public void HasNoTest()
+        {
+            Months.HasNo("wednesday").Should().Be(true);
+            new[] { 1, 3, 5 }.HasNo(2).Should().Be(true);
+
+            Months.HasNo("dec").Should().Be(false);
+            new[] { 1, 3, 5 }.HasNo(3).Should().Be(false);
+        }
+
+        private static void Verify(IEnumerable<string> foundMonths, params object[] expectedMonths) =>
             foundMonths
                 .Select((item, index) => new { index, item })
                 .ForEach(found => expectedMonths.ElementAt(found.index).Should().Be(found.item));
