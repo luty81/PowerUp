@@ -17,7 +17,7 @@ namespace PowerUp.SQL
     {
         public static string GetUpdate(T obj, string table = null) => Get<UpdateCommand>(obj, table);
         public static string GetInsert(T obj, string table = null) => Get<InsertCommand>(obj, table);
-        public static string GetDelete(T obj, string table = null) => DeleteCommandFor<T>.Build(table);
+        public static string GetDelete(T _, string table = null) => DeleteCommandFor<T>.Build(table);
         
         public static string GetSelectStar() => new SelectBuilder<T>().SelectAll;
         public static string GetQuery(Expression<Func<T, object>> column) =>
@@ -27,7 +27,7 @@ namespace PowerUp.SQL
 
         private static string Get<TCommand>(T obj, string table) 
             where TCommand : ICommand, new() =>
-                new CommandBuilder(obj).For<TCommand>(table ?? typeof(T).Name);
+                new CommandBuilder(obj).For<TCommand>(table);
 
     }
 }
