@@ -67,16 +67,9 @@ namespace PowerUp.Tests.SQL
         [Fact]
         public void InsertCommandGenerationWithCustomIdParameter()
         {
-            var sampleObject = new
+            var sampleObject = new SampleEntity
             {
-                Id = "Anything",
                 Name = "John Doe",
-                Email = "john@doe.br",
-                PhoneNumber = "+552199090912",
-                Gender = 'M',
-                Birthday = DateTime.Parse("1989-08-10T03:00:00.000Z"),
-                UserId = 150,
-                UserName = (string)null
             };
 
             var result = new CommandBuilder(sampleObject)
@@ -84,9 +77,9 @@ namespace PowerUp.Tests.SQL
 
             result.ShouldBe(
                 "INSERT INTO IdentityUser",
-                "(Id, Name, Email, PhoneNumber, Gender, Birthday, UserId)",
+                "(Id, Name)",
                 "VALUES",
-                "(UUID_SHORT(), @Name, @Email, @PhoneNumber, @Gender, @Birthday, @UserId)");
+                "(UUID_SHORT(), @Name)");
         }
 
         [Fact]
@@ -201,6 +194,8 @@ namespace PowerUp.Tests.SQL
         class SampleEntity 
         {
             public ulong Id { get; set; }
+
+            public string Name { get; set; }
 
             public EntityTypes EntityType { get; set; }
         }
