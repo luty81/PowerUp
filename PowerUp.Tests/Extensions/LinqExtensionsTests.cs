@@ -54,10 +54,3 @@ namespace PowerUp.Tests.Extensions
                 .ForEach(found => expectedMonths.ElementAt(found.index).Should().Be(found.item));
     }
 }
-
-//var index = 0;
-//foreach(var expectedMonth in expectedMonths)
-//{
-//    foundMonths.ElementAt(index).Should().Be(expectedMonth.ToString());
-//    index += 1;
-//}

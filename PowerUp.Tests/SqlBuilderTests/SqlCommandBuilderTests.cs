@@ -108,7 +108,8 @@ namespace PowerUp.Tests.SQL
         [Fact]
         public void UpdateCommandGenerationFor_AnnotationTableAndKeyField()
         {
-            var sampleObject = new EntityWithCustomKeyField { Oid = "1", Name = "" };
+            var sampleObject = 
+                new EntityWithCustomKeyField { Oid = "1", Name = "" };
 
             new CommandBuilder(sampleObject)
                 .For<UpdateCommand>().Trim().Lines()

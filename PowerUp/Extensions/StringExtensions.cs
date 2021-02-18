@@ -45,5 +45,10 @@ namespace PowerUp
 
         public static string Join(this IEnumerable<string> self, string separator = null) => 
             string.Join(separator, self);
+
+        public static string GroupByFormat(this string self, int groupSize, string separator = "") => 
+            self.GroupEvery(groupSize)
+                .Select(x => new string(x.ToArray()))
+                .Join(separator);
     }
 }
