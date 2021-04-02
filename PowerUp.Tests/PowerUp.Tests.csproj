@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.16.0" />
     <PackageReference Include="FluentAssertions" Version="6.0.0-alpha0002" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.0-preview-20210127-04" />
     <PackageReference Include="NUnit" Version="3.13.0" />
@@ -18,6 +19,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\PowerUp.Database\PowerUp.Database.csproj" />
     <ProjectReference Include="..\PowerUp\PowerUp.csproj">
       <Project>{66022726-b02c-4673-90ae-6c68fa6c33ba}</Project>
       <Name>PowerUp</Name>

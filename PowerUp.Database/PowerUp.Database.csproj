@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <RootNamespace>PowerUp.Database</RootNamespace>
+    <AssemblyName>PowerUp.Database</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>PowerUp.Database</PackageId>
+    <Authors>github.com/luty81</Authors>
+    <PackageProjectUrl>github.com/luty81/PowerUp</PackageProjectUrl>
+    <PackageVersion>1.6.0.0</PackageVersion>
+    <RepositoryUrl>github.com/luty81/PowerUp</RepositoryUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
+    <WarningLevel>1</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PowerUp\PowerUp.csproj" />
+  </ItemGroup>
+</Project>

@@ -9,7 +9,7 @@ build:
 before_package:
 - ps: >-
     nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp\PowerUp.nuspec
-
+    nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp.Database\PowerUp.Database.nuspec
     nuget pack -Version $env:APPVEYOR_BUILD_VERSION PowerUp.EF6\PowerUp.EF.nuspec
 artifacts:
 - path: 'PowerUp*.nupkg'

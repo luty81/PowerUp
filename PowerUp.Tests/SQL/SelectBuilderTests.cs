@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using FluentAssertions;
 using PowerUp.SQL;
+using PowerUp.Tests.SQL.FakeEntities;
 using Xunit;
 
 namespace PowerUp.Tests.SQL
 {
-    public class SqlBuilderTests
+    public class SelectBuilderTests
     {
         [Fact]
         public void GeneratesSqlSelectAllFromTypeTest()
@@ -74,14 +75,6 @@ namespace PowerUp.Tests.SQL
             sqlLines.ElementAt(2).Should().Be("WHERE ST.Id = @Id");
             sqlLines.ElementAt(3).Should().Be("AND ST.Name = @Name ;");
 
-        }
-
-        class SampleType
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public bool Active { get; }
-            private double Internal { get; set; }
         }
     }
 }

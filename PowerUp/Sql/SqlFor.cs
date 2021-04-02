@@ -1,3 +1,4 @@
+using PowerUp.SQL.Commands;
 using System;
 using System.Linq.Expressions;
 using static PowerUp.SQL.ColumnsMode;
@@ -17,8 +18,8 @@ namespace PowerUp.SQL
     {
         public static string GetUpdate(T obj, string table = null) => Get<UpdateCommand>(obj, table);
         public static string GetInsert(T obj, string table = null) => Get<InsertCommand>(obj, table);
-        public static string GetDelete(T _, string table = null) => DeleteCommandFor<T>.Build(table);
-        
+        public static string GetDelete(T _, string table = null) => DeleteCommand.For<T>(table);
+
         public static string GetSelectStar() => new SelectBuilder<T>().SelectAll;
         public static string GetQuery(Expression<Func<T, object>> column) =>
             new SelectBuilder<T>(ResolveAliasesAndNames)
@@ -29,5 +30,10 @@ namespace PowerUp.SQL
             where TCommand : ICommand, new() =>
                 new CommandBuilder(obj).For<TCommand>(table);
 
+    }
+
+    public static class SqlForExtensions
+    {
+        public static string Close(this string self) => self += ";";
     }
 }

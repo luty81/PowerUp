@@ -3,18 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp", "PowerUp\PowerUp.csproj", "{66022726-B02C-4673-90AE-6C68FA6C33BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerUp", "PowerUp\PowerUp.csproj", "{66022726-B02C-4673-90AE-6C68FA6C33BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.EF6", "PowerUp.EF6\PowerUp.EF6.csproj", "{839BA677-173D-4447-967B-8DDE61C81090}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerUp.EF6", "PowerUp.EF6\PowerUp.EF6.csproj", "{839BA677-173D-4447-967B-8DDE61C81090}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Tests", "PowerUp.Tests\PowerUp.Tests.csproj", "{71CC7028-90EF-4F70-BFBA-746D36BD9413}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerUp.Tests", "PowerUp.Tests\PowerUp.Tests.csproj", "{71CC7028-90EF-4F70-BFBA-746D36BD9413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Mvc", "PowerUp.Mvc\PowerUp.Mvc.csproj", "{D64FEB67-83B7-42D6-B124-42D66A6C308C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerUp.Mvc", "PowerUp.Mvc\PowerUp.Mvc.csproj", "{D64FEB67-83B7-42D6-B124-42D66A6C308C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D50B1D52-08CD-4939-8F86-848F8B975003}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerUp.Database", "PowerUp.Database\PowerUp.Database.csproj", "{5F7A1DB3-D077-4ED0-AC05-CC891A0E696E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{D64FEB67-83B7-42D6-B124-42D66A6C308C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D64FEB67-83B7-42D6-B124-42D66A6C308C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D64FEB67-83B7-42D6-B124-42D66A6C308C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F7A1DB3-D077-4ED0-AC05-CC891A0E696E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7A1DB3-D077-4ED0-AC05-CC891A0E696E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7A1DB3-D077-4ED0-AC05-CC891A0E696E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7A1DB3-D077-4ED0-AC05-CC891A0E696E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
