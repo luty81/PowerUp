@@ -12,13 +12,13 @@
     <repository type="git" url="https://github.com/luty81/PowerUp" />
     <dependencies>
       <dependency id="Dapper" version="2.0.78" />
-      <dependency id="PowerUp.Core" version="1.6.61" />
+      <dependency id="PowerUp.Core" version="1.6.65" />
     </dependencies>
   </metadata>
   <files>
-    <file src="lib\net5.0\PowerUp.Database.dll" target="lib\net5.0\PowerUp.Database.dll" />
-    <file src="lib\net5.0\PowerUp.Database.pdb" target="lib\net5.0\PowerUp.Database.pdb" />
-    <file src="lib\netcoreapp3.1\PowerUp.Database.dll" target="lib\netcoreapp3.1\PowerUp.Database.dll" />
-    <file src="lib\netcoreapp3.1\PowerUp.Database.pdb" target="lib\netcoreapp3.1\PowerUp.Database.pdb" />
+    <file src="bin\Release\net5.0\PowerUp.Database.dll" target="lib\net5.0\PowerUp.Database.dll" />
+    <file src="bin\Release\net5.0\PowerUp.Database.pdb" target="lib\net5.0\PowerUp.Database.pdb" />
+    <file src="bin\Release\netcoreapp3.1\PowerUp.Database.pdb" target="lib\netcoreapp3.1\PowerUp.Database.pdb" />
+    <file src="bin\Release\netcoreapp3.1\PowerUp.Database.dll" target="lib\netcoreapp3.1\PowerUp.Database.dll" />
   </files>
 </package>
