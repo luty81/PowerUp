@@ -41,8 +41,8 @@ namespace PowerUp.SQL
         public CommandBuilder(object @object, bool ignoreUnassigned = true)
         {
             _object = @object;
-            
-            Columns = _object.GetType().Getters();
+
+            Columns = _object.GetType().GetProperties(BindingFlags.GetProperty, BindingFlags.SetProperty);
             KeyColumns = KeyColumnsExtractor.Names(Columns);
             AssignedProperties = Columns.Where(HasValue);
             if (ignoreUnassigned)
@@ -59,12 +59,11 @@ namespace PowerUp.SQL
         private bool HasValue(PropertyInfo propertyInfo)
         {
             var @value = propertyInfo.GetValue(_object);
-            if (@value == null) return false;
 
-            if (propertyInfo.PropertyType.IsValueType) // If the value is the type default, then we assume it is unassigned
-                return !Activator.CreateInstance(@value.GetType()).Equals(@value);
+            if (propertyInfo.PropertyType.IsEnum)
+                return propertyInfo.PropertyType.IsEnumDefined(@value);
 
-            return true;
+            return @value != null;
         }
 
         private readonly object _object;

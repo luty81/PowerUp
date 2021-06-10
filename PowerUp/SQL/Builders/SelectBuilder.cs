@@ -17,6 +17,9 @@ namespace PowerUp.SQL
         public WhereBuilder<T> Where(Expression<Func<T, object>> columnSelector) =>
             _where.AddClause(columnSelector);
 
+        public WhereBuilder<T> WhereLike(Expression<Func<T, object>> columnSelector) =>
+            _where.AddLikeClause(columnSelector);
+
         public override string ToString() => Done();
 
         public string Done() => _builder

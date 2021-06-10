@@ -82,9 +82,9 @@ namespace PowerUp.Tests.Database
 
     class FakeDeviceModel
     {
-        public ulong Id { get; internal set; }
-        public string NetworkAddress { get; internal set; }
-        public string SerialNumber { get; internal set; }
+        public ulong Id { get; set; }
+        public string NetworkAddress { get; set; }
+        public string SerialNumber { get; set; }
     }
 
     class FakeEntityModel

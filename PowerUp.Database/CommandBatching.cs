@@ -88,16 +88,4 @@ namespace PowerUp.Database
 
         private readonly IList<BatchOperation> _batchOperations = new List<BatchOperation>();
     }
-
-    public class BatchOperation
-    {
-        public string CommandSQL { get; set; }
-        public object Entity { get; set; }
-
-        public BatchOperation(string sql, object entity)
-        {
-            CommandSQL = sql;
-            Entity = entity;
-        }
-    }
 }

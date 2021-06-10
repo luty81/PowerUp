@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentAssertions;
 using PowerUp.SQL;
 using PowerUp.Tests.SQL.FakeEntities;
 using Xunit;
@@ -70,6 +71,22 @@ namespace PowerUp.Tests.SQL
                     "(UserId, ProfileId, RoleId, Name)",
                     "VALUES",
                     "(@UserId, @ProfileId, @RoleId, @Name)");
+        }
+
+        [Fact]
+        public void InsertCommandWithoutId()
+        {
+            var fakeName = $"Entity {Guid.NewGuid()}";
+            var entity = new EntityWithCustomKeyField { Name = fakeName };
+
+            var result = new CommandBuilder(entity).For<InsertCommand>();
+            result.Should().Be(SqlFor<EntityWithCustomKeyField>.GetInsert(entity));
+
+            result.Trim().Lines()
+                .ShouldBe("INSERT INTO entities", "(Name)", "VALUES", "(@Name)");
+
+
+
         }
     }
 }
