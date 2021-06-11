@@ -25,7 +25,7 @@ namespace PowerUp.Tests.SQL
             };
 
 
-            new CommandBuilder(sampleObject)
+            new CommandBuilder(sampleObject, dontInsertKeyFields: false)
                 .For<InsertCommand>("IdentityUser").Trim().Lines()
                 .ShouldBe(
                     "INSERT INTO IdentityUser",
@@ -42,7 +42,7 @@ namespace PowerUp.Tests.SQL
                 Name = "John Doe",
             };
 
-            var result = new CommandBuilder(sampleObject)
+            var result = new CommandBuilder(sampleObject, dontInsertKeyFields: false)
                 .For<InsertCommand>("IdentityUser", ("Id", "UUID_SHORT()")).Trim().Lines();
 
             result.ShouldBe(
@@ -63,7 +63,7 @@ namespace PowerUp.Tests.SQL
                 Name = $"{Guid.NewGuid()}"
             };
 
-            new CommandBuilder(entity)
+            new CommandBuilder(entity, dontInsertKeyFields: false)
                 .For<InsertCommand>()
                 .Trim().Lines()
                 .ShouldBe(
@@ -80,7 +80,7 @@ namespace PowerUp.Tests.SQL
             var entity = new EntityWithCustomKeyField { Name = fakeName };
 
             var result = new CommandBuilder(entity).For<InsertCommand>();
-            result.Should().Be(SqlFor<EntityWithCustomKeyField>.GetInsert(entity));
+            result.Should().Be(SqlFor<EntityWithCustomKeyField>.GetInsert(entity, dontSetKeyFields: true));
 
             result.Trim().Lines()
                 .ShouldBe("INSERT INTO entities", "(Name)", "VALUES", "(@Name)");

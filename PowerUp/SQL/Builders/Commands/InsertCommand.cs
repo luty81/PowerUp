@@ -9,13 +9,16 @@ namespace PowerUp.SQL
 {
     public class InsertCommand: ICommand
     {
-        public string Build(string tableName, IEnumerable<(PropertyInfo column, string param)> fields)
+        public string Build(string tableName, IEnumerable<(PropertyInfo column, string param)> fields, bool dontSetKeys)
         {
+            var keyFields = KeyColumnsExtractor.Names(fields.Select(f => f.column));
+            var fieldsToSet = dontSetKeys ? fields.Where(f => keyFields.NotContains(f.column.Name)) : fields;
+
             return new StringBuilder()
                 .AppendLine($"INSERT INTO {tableName}")
-                .AppendLine($"({fields.Select(c => c.column.Name).JoinByComma()})")
+                .AppendLine($"({fieldsToSet.Select(c => c.column.Name).JoinByComma()})")
                 .AppendLine("VALUES")
-                .AppendLine($"({fields.Select(c => c.param ?? $"@{c.column.Name}").JoinByComma()})")
+                .AppendLine($"({fieldsToSet.Select(c => c.param ?? $"@{c.column.Name}").JoinByComma()})")
             .ToString();
         }
     }

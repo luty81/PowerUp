@@ -16,9 +16,12 @@ namespace PowerUp.SQL
 
     public static class SqlFor<T> where T : class, new()
     {
-        public static string GetUpdate(T obj, string table = null) => Get<UpdateCommand>(obj, table);
-        public static string GetInsert(T obj, string table = null) => Get<InsertCommand>(obj, table);
-        public static string GetDelete(T _, string table = null) => DeleteCommand.For<T>(table);
+        public static string GetUpdate(T obj, string table = null) => 
+            Get<UpdateCommand>(obj, table);
+        public static string GetInsert(T obj, bool dontSetKeyFields, string table = null) => 
+            Get<InsertCommand>(obj, table, dontSetKeyFields);
+        public static string GetDelete(T _, string table = null) => 
+            DeleteCommand.For<T>(table);
 
         public static string GetSelectStar() => new SelectBuilder<T>().SelectAll;
         public static string GetQuery(Expression<Func<T, object>> column) =>
@@ -26,9 +29,9 @@ namespace PowerUp.SQL
                 .Where(column)
                 .Done();
 
-        private static string Get<TCommand>(T obj, string table) 
+        private static string Get<TCommand>(T obj, string table, bool dontSetKeyFields = true) 
             where TCommand : ICommand, new() =>
-                new CommandBuilder(obj).For<TCommand>(table);
+                new CommandBuilder(obj, dontSetKeyFields).For<TCommand>(table);
 
     }
 

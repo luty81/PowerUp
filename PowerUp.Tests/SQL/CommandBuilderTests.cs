@@ -14,7 +14,7 @@ namespace PowerUp.Tests.SQL
         public void CommandBuilderShouldHandleEnumsProperly()
         {
             var entity = new SampleEntity { EntityType = EntityTypes.Fake };
-            SqlFor<SampleEntity>.GetInsert(entity).Lines().Join(" ")
+            SqlFor<SampleEntity>.GetInsert(entity, dontSetKeyFields: true).Lines().Join(" ")
                 .Should().Be("INSERT INTO SampleEntity (EntityType) VALUES (@EntityType) ");
         }
 
