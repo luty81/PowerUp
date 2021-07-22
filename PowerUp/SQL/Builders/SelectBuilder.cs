@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 
 using static PowerUp.SQL.ColumnsMode;
@@ -43,7 +45,7 @@ namespace PowerUp.SQL
                 .AppendLine($@"FROM {TableName} {TableAlias} ");
         }
 
-        private static string TableName => typeof(T).Name;
+        private static string TableName => typeof(T).GetCustomAttribute<TableAttribute>()?.Name ?? typeof(T).Name;
         private static IEnumerable<string> ColumnNames => typeof(T).GetProperties().Select(p => p.Name);
         private IEnumerable<string> ColumnList() => _mode switch
         {

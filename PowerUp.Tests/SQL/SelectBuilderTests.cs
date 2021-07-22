@@ -88,5 +88,16 @@ namespace PowerUp.Tests.SQL
                     "FROM SampleEntity",
                     "WHERE Name LIKE @Name ;");
         }
+
+        [Fact]
+        public void CanUseTableAttributeToDefineTableName()
+        {
+            var result =
+                Sql.For<EntityWithTableAttribute>()
+                    .SelectAll.Trim().Lines();
+
+            result.ShouldBe("SELECT c.Id ", "FROM custom_table_name c ", ";");
+
+        }
     }
 }
