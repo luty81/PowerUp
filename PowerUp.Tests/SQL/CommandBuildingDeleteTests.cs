@@ -11,13 +11,13 @@ namespace PowerUp.Tests.SQL
         [Fact]
         public void DeleteCommandBuilderReturnsTheSameForBothInstanceOrTypeInput()
         {
-            var expected = "DELETE FROM SampleEntity\r\nWHERE Id = @Id;\r\n";
+            var expected = new[] { "DELETE FROM SampleEntity", "WHERE Id = @Id;" };
 
-            DeleteCommand.For<SampleEntity>()
-                .Should().Be(expected);
+            Get(DeleteCommand.For<SampleEntity>())
+                .ShouldBe(expected);
 
-            DeleteCommand.For(new SampleEntity())
-                .Should().Be(expected);
+            Get(DeleteCommand.For(new SampleEntity()))
+                .ShouldBe(expected);
         }
 
         [Fact]

@@ -36,6 +36,11 @@ namespace PowerUp.Tests.SQL
                 .ShouldBe("Id", "Name", "Birthday", "UserId");
         }
 
+        public void CommandBuilderShouldHandleBoolProperties()
+        {
+            
+        }
+
     }
 
     public enum EntityTypes { Dummy = 0, Fake = 1 }
