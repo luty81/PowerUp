@@ -28,4 +28,5 @@ jobs:
       with:   
         PROJECT_FILE_PATH: PowerUp/PowerUp.csproj
         VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
+        PACKAGE_PATH: artifacts/
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
