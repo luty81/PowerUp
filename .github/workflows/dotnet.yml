@@ -24,7 +24,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      uses: brandedoutcast/publish-nuget@v2.5.2  
+      uses: Elskom/publish-nuget@main  
       with:   
         PROJECT_FILE_PATH: PowerUp/PowerUp.csproj
         VERSION_REGEX: <PackageVersion>(.*)<\/PackageVersion>
