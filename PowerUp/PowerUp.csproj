@@ -9,7 +9,7 @@
     <Authors>github.com/luty81</Authors>
     <PackageProjectUrl>github.com/luty81/PowerUp</PackageProjectUrl>
     <PackageIcon>icon.PNG</PackageIcon>
-    <PackageVersion>1.6.0.0</PackageVersion>
+    <PackageVersion>1.7.*</PackageVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
     <WarningLevel>1</WarningLevel>

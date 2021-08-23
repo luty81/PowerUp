@@ -26,5 +26,6 @@ jobs:
     - name: Publish
       uses: brandedoutcast/publish-nuget@v2.5.2  
       with:   
-        PROJECT_FILE_PATH: PowerUp/PowerUp.csproj  
+        PROJECT_FILE_PATH: PowerUp/PowerUp.csproj
+        VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
