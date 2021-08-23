@@ -14,3 +14,5 @@
 *.v2
 .vs
 /.vs
+bin
+obj
