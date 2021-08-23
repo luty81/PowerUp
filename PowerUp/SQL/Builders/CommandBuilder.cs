@@ -33,20 +33,17 @@ namespace PowerUp.SQL
             }
 
             if (fields.Any())
-                return new TCommand().Build(tableName, fields);
+                return new TCommand().Build(tableName, fields, DontInsertKeyFields);
 
             return null;
         }
 
-        public CommandBuilder(object @object, bool ignoreUnassigned = true)
+        public CommandBuilder(object @object, bool dontInsertKeyFields = true, bool ignoreUnassigned = true)
         {
             _object = @object;
-            
-            Columns = _object.GetType().Getters();
+            DontInsertKeyFields = dontInsertKeyFields;
+            Columns = DiscoverColumns(ignoreUnassigned);
             KeyColumns = KeyColumnsExtractor.Names(Columns);
-            AssignedProperties = Columns.Where(HasValue);
-            if (ignoreUnassigned)
-                Columns = AssignedProperties;
         }
 
 
@@ -54,18 +51,30 @@ namespace PowerUp.SQL
         
         protected readonly IEnumerable<string> KeyColumns;
 
-        protected string TableNameFromType() => _object.GetType().GetCustomAttribute<TableAttribute>()?.Name ?? _object.GetType().Name;
+        protected readonly bool DontInsertKeyFields;
+
+        protected string TableNameFromType() => 
+            _object.GetType().GetCustomAttribute<TableAttribute>()?.Name ?? _object.GetType().Name;
+
 
         private bool HasValue(PropertyInfo propertyInfo)
         {
             var @value = propertyInfo.GetValue(_object);
-            if (@value == null) return false;
 
-            if (propertyInfo.PropertyType.IsValueType) // If the value is the type default, then we assume it is unassigned
-                return !Activator.CreateInstance(@value.GetType()).Equals(@value);
+            if (propertyInfo.PropertyType.IsEnum)
+                return propertyInfo.PropertyType.IsEnumDefined(@value);
 
-            return true;
+            return @value != null;
         }
+        private IEnumerable<PropertyInfo> DiscoverColumns(bool ignoreUnassigned)
+        {
+            var onlyGettersAndSetters = new[] { BindingFlags.GetProperty, BindingFlags.SetProperty };
+            var properties = _object.GetType().GetProperties(onlyGettersAndSetters);
+            
+            AssignedProperties = properties.Where(HasValue);
+            return ignoreUnassigned ? AssignedProperties : properties;
+        }
+
 
         private readonly object _object;
     }

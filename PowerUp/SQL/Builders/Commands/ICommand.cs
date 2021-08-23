@@ -6,7 +6,7 @@ namespace PowerUp.SQL.Commands
 {
     public interface ICommand
     {
-        string Build(string tableName, IEnumerable<(PropertyInfo column, string param)> fields);
+        string Build(string tableName, IEnumerable<(PropertyInfo column, string param)> fields, bool dontSetKey);
     }
 
 }

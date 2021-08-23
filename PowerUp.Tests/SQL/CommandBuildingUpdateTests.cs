@@ -24,6 +24,18 @@ namespace PowerUp.Tests.SQL
         }
 
         [Fact]
+        public void UpdateCommandUsingAnonymousType()
+        {
+            var @object = new { Id = 1, Enabled = (bool?)false, Active = false, Count = (int?)null };
+            new CommandBuilder(@object)
+                .For<UpdateCommand>("some_table").Trim().Lines()
+                .ShouldBe(
+                    "UPDATE some_table",
+                    "SET Enabled = @Enabled, Active = @Active",
+                    "WHERE Id = @Id");
+        }
+
+        [Fact]
         public void UpdateCommandGenerationFor_AdhocTableName()
         {
             var sampleObject = new

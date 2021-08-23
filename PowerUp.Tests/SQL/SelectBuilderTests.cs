@@ -76,5 +76,28 @@ namespace PowerUp.Tests.SQL
             sqlLines.ElementAt(3).Should().Be("AND ST.Name = @Name ;");
 
         }
+
+        [Fact]
+        public void GeneratesSqlSelectWithLikeOperator()
+        {
+            var sql = new SelectBuilder<SampleEntity>().WhereLike(x => x.Name).Done();
+
+            sql.Split(Environment.NewLine).Select(x => x.Trim())
+               .ShouldBe(
+                    "SELECT *",
+                    "FROM SampleEntity",
+                    "WHERE Name LIKE @Name ;");
+        }
+
+        [Fact]
+        public void CanUseTableAttributeToDefineTableName()
+        {
+            var result =
+                Sql.For<EntityWithTableAttribute>()
+                    .SelectAll.Trim().Lines();
+
+            result.ShouldBe("SELECT c.Id ", "FROM custom_table_name c ", ";");
+
+        }
     }
 }

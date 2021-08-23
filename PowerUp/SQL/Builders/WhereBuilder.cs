@@ -15,7 +15,13 @@ namespace PowerUp.SQL
                     .Append($"\t {@op}".ToUpper());
             }
 
-            _builder.Append(NewClause(columnSelector));
+            _builder.Append(EqualityClause(columnSelector));
+            return this;
+        }
+
+        public WhereBuilder<T> AddLikeClause(Expression<Func<T, object>> columnSelector)
+        {
+            _builder.Append(LikeClause(columnSelector));
             return this;
         }
 
@@ -39,7 +45,20 @@ namespace PowerUp.SQL
             _sql = sql;
         }
 
-        private string NewClause(Expression<Func<T, object>> propertySelector)
+
+        private string EqualityClause(Expression<Func<T, object>> propertySelector)
+        {
+            var (column, param) = ExtractOperands(propertySelector);
+            return $" {column} = @{param} ";
+        }
+        private string LikeClause(Expression<Func<T, object>> propertySelector)
+        {
+            var (column, param) = ExtractOperands(propertySelector);
+            return $" {column} LIKE @{param} ";
+        }
+
+
+        private (string column, string param) ExtractOperands(Expression<Func<T, object>> propertySelector)
         {
             var prop = "";
             if (propertySelector.Body is UnaryExpression unary)
@@ -49,7 +68,7 @@ namespace PowerUp.SQL
             
             var alias = _sql.TableAlias;
             var column = alias.IsEmpty() ? prop : $"{alias}.{prop}";
-            return $" {column} = @{prop} ";
+            return (column, prop);
         }
 
         private readonly SelectBuilder<T> _sql;

@@ -16,7 +16,8 @@ namespace PowerUp.Tests.SqlBuilderTests
         [Fact]
         public void SqlForInsertReturnsACommandWithOnlyAssignedProperties()
         {
-            SqlFor<SampleType>.GetInsert(new SampleType() { Name = "Test" }).Trim().Lines()
+            var sample = new SampleType() { Name = "Test" };
+            SqlFor<SampleType>.GetInsert(sample, dontSetKeyFields: true).Trim().Lines()
                 .ShouldBe("INSERT INTO SampleType", "(Name)", "VALUES", "(@Name)");
         }
 
@@ -42,13 +43,13 @@ namespace PowerUp.Tests.SqlBuilderTests
 
             static IEnumerable<string> GetInsertFor<T>(T fakeEntity) 
                 where T : class, new() => 
-                    SqlFor<T>.GetInsert(fakeEntity).Trim().Lines();
+                    SqlFor<T>.GetInsert(fakeEntity, dontSetKeyFields: false).Trim().Lines();
         }
 
         [Theory, AutoData]
         public void ShouldBePossibleToCloseGeneratedCommand(SampleType fakeEntity)
         {
-            var rawCommand = SqlFor<SampleType>.GetInsert(fakeEntity).Close();
+            var rawCommand = SqlFor<SampleType>.GetInsert(fakeEntity, dontSetKeyFields: false).Close();
 
             rawCommand.EndsWith(";")
                 .Should().BeTrue();

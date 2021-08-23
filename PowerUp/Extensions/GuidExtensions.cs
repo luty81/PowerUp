@@ -8,14 +8,15 @@ namespace PowerUp
 {
     public static class GuidExtensions
     {
-        public static bool IsNullOrZero(this Guid? self)
-        {
-            return self.HasValue ? self.Value.IsZero() : true;
-        }
+        public static Guid NullGuid => new Guid(new string('0', 32)); 
+        
+        public static bool IsNullOrZero(this Guid? self) => 
+            self == null || self.IsZero();
+        public static bool IsZero(this Guid? self) => 
+            self.HasValue && self == NullGuid;
 
-        public static bool IsZero(this Guid self)
-        {
-            return self == new Guid(new String('0', 32));
-        }
+        public static Guid ToGuid(this byte[] self) => new Guid(self);
+
     }
+
 }

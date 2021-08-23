@@ -12,10 +12,10 @@ namespace PowerUp.Database
     public class CommandBatching
     {
         public CommandBatching Insert(object entity) =>
-            Insert(entity, null, (null, null));
+            Insert(entity, null, (null, null), dontSetKeyFields: true);
 
         public CommandBatching Insert(object entity, string customTableName) =>
-            Insert(entity, customTableName, (null, null));
+            Insert(entity, customTableName, (null, null), dontSetKeyFields: true);
 
         public CommandBatching Insert<T>(IEnumerable<T> entities) where T : class
         {
@@ -27,7 +27,7 @@ namespace PowerUp.Database
             InsertUUID(entity, customTableName: null);
 
         public CommandBatching InsertUUID(object entity, string customTableName) =>
-            Insert(entity, customTableName, AutoKey(entity));
+            Insert(entity, customTableName, AutoKey(entity), dontSetKeyFields: false);
 
         public CommandBatching InsertUUID(IEnumerable<object> objects)
         {
@@ -64,13 +64,17 @@ namespace PowerUp.Database
 
         public IEnumerable<BatchOperation> Operations { get => _batchOperations; }
 
-        private CommandBatching Insert(object obj, string tableName, (string column, string param) customParam)
+        private CommandBatching Insert(
+            object obj, 
+            string tableName, 
+            (string column, string param) customParam,
+            bool dontSetKeyFields)
         {
             var customParams = Enumerable.Empty<(string c, string p)>().ToList();
             if (customParam.column != null)
                 customParams.Add(customParam);
 
-            var commandText = new CommandBuilder(obj)
+            var commandText = new CommandBuilder(obj, dontSetKeyFields)
                 .For<InsertCommand>(tableName, customParams.ToArray());
 
             _batchOperations.Add(new BatchOperation(commandText, obj));
@@ -87,17 +91,5 @@ namespace PowerUp.Database
         }
 
         private readonly IList<BatchOperation> _batchOperations = new List<BatchOperation>();
-    }
-
-    public class BatchOperation
-    {
-        public string CommandSQL { get; set; }
-        public object Entity { get; set; }
-
-        public BatchOperation(string sql, object entity)
-        {
-            CommandSQL = sql;
-            Entity = entity;
-        }
     }
 }

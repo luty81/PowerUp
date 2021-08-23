@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentAssertions;
 using PowerUp.SQL;
 using PowerUp.Tests.SQL.FakeEntities;
 using Xunit;
@@ -24,7 +25,7 @@ namespace PowerUp.Tests.SQL
             };
 
 
-            new CommandBuilder(sampleObject)
+            new CommandBuilder(sampleObject, dontInsertKeyFields: false)
                 .For<InsertCommand>("IdentityUser").Trim().Lines()
                 .ShouldBe(
                     "INSERT INTO IdentityUser",
@@ -41,7 +42,7 @@ namespace PowerUp.Tests.SQL
                 Name = "John Doe",
             };
 
-            var result = new CommandBuilder(sampleObject)
+            var result = new CommandBuilder(sampleObject, dontInsertKeyFields: false)
                 .For<InsertCommand>("IdentityUser", ("Id", "UUID_SHORT()")).Trim().Lines();
 
             result.ShouldBe(
@@ -62,7 +63,7 @@ namespace PowerUp.Tests.SQL
                 Name = $"{Guid.NewGuid()}"
             };
 
-            new CommandBuilder(entity)
+            new CommandBuilder(entity, dontInsertKeyFields: false)
                 .For<InsertCommand>()
                 .Trim().Lines()
                 .ShouldBe(
@@ -70,6 +71,22 @@ namespace PowerUp.Tests.SQL
                     "(UserId, ProfileId, RoleId, Name)",
                     "VALUES",
                     "(@UserId, @ProfileId, @RoleId, @Name)");
+        }
+
+        [Fact]
+        public void InsertCommandWithoutId()
+        {
+            var fakeName = $"Entity {Guid.NewGuid()}";
+            var entity = new EntityWithCustomKeyField { Name = fakeName };
+
+            var result = new CommandBuilder(entity).For<InsertCommand>();
+            result.Should().Be(SqlFor<EntityWithCustomKeyField>.GetInsert(entity, dontSetKeyFields: true));
+
+            result.Trim().Lines()
+                .ShouldBe("INSERT INTO entities", "(Name)", "VALUES", "(@Name)");
+
+
+
         }
     }
 }

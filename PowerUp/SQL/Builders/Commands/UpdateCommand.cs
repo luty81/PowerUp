@@ -9,12 +9,12 @@ namespace PowerUp.SQL
 {
     public class UpdateCommand: ICommand
     {
-        public string Build(string tableName, IEnumerable<(PropertyInfo column, string param)> fields)
+        public string Build(string tableName, IEnumerable<(PropertyInfo column, string param)> fields, bool dontSetKeys)
         {
             var keyFields = KeyColumnsExtractor.Names(fields.Select(f => f.column));
 
             var columnsToSet = fields
-                .Where(f => keyFields.NotContains(f.column.Name))
+                .Where(f => (dontSetKeys ? keyFields : Enumerable.Empty<string>()).NotContains(f.column.Name))
                 .Select(f => $"{f.column.Name} = {f.param}");
 
             return new StringBuilder()
